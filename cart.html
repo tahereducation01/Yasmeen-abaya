@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Yasmin Abaya</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-header {
+            padding: 60px 0;
+            background-color: var(--soft);
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .cart-section {
+            padding: 80px 0;
+        }
+
+        .cart-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .cart-items {
+            width: 65%;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cart-table th {
+            text-align: left;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            font-weight: 500;
+            color: #777;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .cart-table td {
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .item-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .item-info img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .item-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .item-details p {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .remove-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            width: 100px;
+            height: 40px;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 100%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .qty-input {
+            width: 40px;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-family: var(--font-body);
+        }
+
+        .item-price,
+        .item-total {
+            font-weight: 500;
+        }
+
+        .coupon-box {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .coupon-box input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            font-family: var(--font-body);
+            outline: none;
+        }
+
+        .coupon-box button {
+            padding: 12px 30px;
+            background: var(--text);
+            color: var(--background);
+            border: none;
+            font-family: var(--font-body);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cart-summary {
+            width: 35%;
+            background: #FAFAFA;
+            padding: 30px;
+            border: 1px solid var(--border);
+            height: fit-content;
+        }
+
+        .cart-summary h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .summary-total {
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .checkout-btn {
+            display: block;
+            text-align: center;
+            box-sizing: border-box;
+            text-decoration: none;
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: var(--background);
+            border: none;
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        @media (max-width: 992px) {
+            .cart-container {
+                flex-direction: column;
+            }
+
+            .cart-items,
+            .cart-summary {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .cart-table th {
+                display: none;
+            }
+
+            .cart-table td {
+                display: block;
+                width: 100%;
+                text-align: center;
+                border: none;
+            }
+
+            .cart-table tr {
+                border-bottom: 1px solid var(--border);
+                display: block;
+                padding: 15px 0;
+            }
+
+            .item-info {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .quantity-selector {
+                margin: 0 auto 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <a href="index.html" class="logo">Yasmin <span>Abaya</span></a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">The Atelier</a>
+                <a href="signature.html">Signature</a>
+                <a href="hijab.html">Hijabs</a>
+                <a href="order-history.html">Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div class="nav-icons">
+                <button aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                <a href="cart.html" aria-label="Cart" style="color:var(--secondary)"><i
+                        class="fa-solid fa-bag-shopping"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Your Shopping Bag</h1>
+            <p>Review your luxury selections before proceeding to checkout.</p>
+        </div>
+    </div>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <div class="cart-container">
+
+                <div class="cart-items">
+                    <table class="cart-table">
+                        <th>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    <div class="coupon-box">
+                        <input type="text" placeholder="Enter VIP Promo Code">
+                        <button>Apply</button>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>75 KWD</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping (Kuwait)</span>
+                        <span style="color:var(--secondary)">Complimentary</span>
+                    </div>
+
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span>75 KWD</span>
+                    </div>
+
+                    <p style="font-size:0.8rem; color:#888; margin-top:15px; text-align:center;">
+                        Taxes included. Proceeding to checkout implies agreement to our luxury service terms.
+                    </p>
+
+                    <a href="checkout.html" class="checkout-btn">Proceed To Checkout</a>
+
+                    <div style="text-align:center; margin-top:20px; color:#555;">
+                        <i class="fa-solid fa-lock"></i> Secure Checkout
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-bottom" style="margin-top:0;">
+                <p>&copy; 2026 Yasmin Abaya House. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+        document.getElementById('mobile-toggle').addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>

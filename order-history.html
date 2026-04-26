@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History | Yasmin Abaya</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-header {
+            padding: 60px 0;
+            background-color: var(--soft);
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .cart-section {
+            padding: 80px 0;
+        }
+
+        .cart-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .cart-items {
+            width: 65%;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .orders-table th {
+            text-align: left;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            font-weight: 500;
+            color: #777;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .orders-table td {
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .item-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .item-info img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .item-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .item-details p {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .remove-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            width: 100px;
+            height: 40px;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 100%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .qty-input {
+            width: 40px;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-family: var(--font-body);
+        }
+
+        .item-price,
+        .item-total {
+            font-weight: 500;
+        }
+
+        .coupon-box {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .coupon-box input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            font-family: var(--font-body);
+            outline: none;
+        }
+
+        .coupon-box button {
+            padding: 12px 30px;
+            background: var(--text);
+            color: var(--background);
+            border: none;
+            font-family: var(--font-body);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cart-summary {
+            width: 35%;
+            background: #FAFAFA;
+            padding: 30px;
+            border: 1px solid var(--border);
+            height: fit-content;
+        }
+
+        .cart-summary h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .summary-total {
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: var(--background);
+            border: none;
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        @media (max-width: 992px) {
+            .cart-container {
+                flex-direction: column;
+            }
+
+            .cart-items,
+            .cart-summary {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .orders-table th {
+                display: none;
+            }
+
+            .orders-table td {
+                display: block;
+                width: 100%;
+                text-align: center;
+                border: none;
+            }
+
+            .orders-table tr {
+                border-bottom: 1px solid var(--border);
+                display: block;
+                padding: 15px 0;
+            }
+
+            .item-info {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .quantity-selector {
+                margin: 0 auto 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <a href="index.html" class="logo">Yasmin <span>Abaya</span></a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">The Atelier</a>
+                <a href="signature.html">Signature</a>
+                <a href="hijab.html">Hijabs</a>
+                <a href="order-history.html" class="active" style="color: var(--secondary);">Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div class="nav-icons">
+                <button aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                <a href="cart.html" aria-label="Cart"><i
+                        class="fa-solid fa-bag-shopping"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Order History</h1>
+            <p>Review your past luxury purchases and their status.</p>
+        </div>
+    </div>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <div class="cart-container">
+
+                <div class="cart-items" style="width: 100%;">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Order 1 -->
+                            <tr>
+                                <td><span class="item-price">#YSM-8492</span></td>
+                                <td><span style="color:#777;">24 Apr 2026</span></td>
+                                <td>
+                                    <div class="item-info">
+                                        <img src="images/luxury_abaya.png" alt="Midnight Noir Abaya" style="width:50px; height:60px;">
+                                        <div class="item-details">
+                                            <h4 style="font-size:0.95rem;">Midnight Noir Abaya</h4>
+                                            <p style="margin-bottom:0;">Qty: 1</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="item-total">45 KWD</span></td>
+                                <td><span style="color: green; font-weight: 500;">Delivered</span></td>
+                                <td><button class="remove-btn" style="color:var(--secondary);">View Details</button></td>
+                            </tr>
+
+                            <!-- Order 2 -->
+                            <tr>
+                                <td><span class="item-price">#YSM-8310</span></td>
+                                <td><span style="color:#777;">12 Apr 2026</span></td>
+                                <td>
+                                    <div class="item-info">
+                                        <img src="images/hijab.png" alt="Cashmere Blend Hijab" style="width:50px; height:60px;">
+                                        <div class="item-details">
+                                            <h4 style="font-size:0.95rem;">Cashmere Blend Hijab</h4>
+                                            <p style="margin-bottom:0;">Qty: 2</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="item-total">30 KWD</span></td>
+                                <td><span style="color: green; font-weight: 500;">Delivered</span></td>
+                                <td><button class="remove-btn" style="color:var(--secondary);">View Details</button></td>
+                            </tr>
+                            
+                            <!-- Order 3 -->
+                            <tr>
+                                <td><span class="item-price">#YSM-8555</span></td>
+                                <td><span style="color:#777;">26 Apr 2026</span></td>
+                                <td>
+                                    <div class="item-info">
+                                        <img src="images/party_abaya.png" alt="Golden Sleeve Abaya" style="width:50px; height:60px;">
+                                        <div class="item-details">
+                                            <h4 style="font-size:0.95rem;">Golden Sleeve Abaya</h4>
+                                            <p style="margin-bottom:0;">Qty: 1</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="item-total">52 KWD</span></td>
+                                <td><span style="color: orange; font-weight: 500;">Processing</span></td>
+                                <td><button class="remove-btn" style="color:var(--secondary);">Track Order</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-bottom" style="margin-top:0;">
+                <p>&copy; 2026 Yasmin Abaya House. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+        document.getElementById('mobile-toggle').addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>

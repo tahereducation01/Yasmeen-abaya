@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Yasmin Abaya - Premium Collection</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-header {
+            padding: 80px 0;
+            background-color: var(--soft);
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .breadcrumb {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+
+        .shop-container {
+            display: flex;
+            gap: 40px;
+            padding: 60px 0;
+        }
+
+        .shop-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .filter-widget {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .filter-widget h4 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-list li {
+            margin-bottom: 12px;
+        }
+
+        .filter-list label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            color: var(--text);
+            transition: color 0.3s;
+        }
+
+        .filter-list label:hover {
+            color: var(--secondary);
+        }
+
+        .filter-list input[type="checkbox"] {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .color-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-item {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .shop-content {
+            flex-grow: 1;
+        }
+
+        .shop-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .shop-controls select {
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            outline: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .shop-controls select:focus {
+            border-color: var(--secondary);
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 50px;
+        }
+
+        .page-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .page-link:hover,
+        .page-link.active {
+            background-color: var(--primary);
+            color: var(--background);
+            border-color: var(--primary);
+        }
+
+        @media (max-width: 992px) {
+            .shop-container {
+                flex-direction: column;
+            }
+
+            .shop-sidebar {
+                width: 100%;
+            }
+
+            .shop-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .shop-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="container">
+            <div class="topbar">
+                <span><i class="fa-solid fa-gem"></i> Premium Quality Guaranteed</span>
+            </div>
+            <div class="topbar" style="letter-spacing: 2px;">
+                <span>Complimentary Delivery Across Kuwait</span>
+            </div>
+            <div class="topbar">
+                <span><i class="fa-brands fa-whatsapp"></i> Personal Shopper</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+
+            <a href="index.html" class="logo">Yasmin <span>Abaya</span></a>
+
+            <div class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html" class="active">The Atelier (Shop)</a>
+                <a href="signature.html">Signature</a>
+                <a href="hijab.html">Hijabs</a>
+                <a href="order-history.html">Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+
+            <div class="nav-icons">
+                <button aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                <a href="cart.html" aria-label="Cart" style="color:var(--primary)"><i
+                        class="fa-solid fa-bag-shopping"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>The Atelier</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / Shop All Collections
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Content -->
+    <section class="shop-section">
+        <div class="container">
+            <div class="shop-container">
+
+                <!-- Sidebar Filters -->
+                <aside class="shop-sidebar">
+                    <div class="filter-widget">
+                        <h4>Categories</h4>
+                        <ul class="filter-list">
+                            <li><label><input type="checkbox"> Luxury Abayas (12)</label></li>
+                            <li><label><input type="checkbox"> Casual Abayas (8)</label></li>
+                            <li><label><input type="checkbox"> Party Abayas (15)</label></li>
+                            <li><label><input type="checkbox"> Pure Silk Hijabs (20)</label></li>
+                            <li><label><input type="checkbox"> Accessories (5)</label></li>
+                        </ul>
+                    </div>
+
+                    <div class="filter-widget">
+                        <h4>Price Range</h4>
+                        <input type="range" min="10" max="150" value="150"
+                            style="width: 100%; accent-color: var(--primary);">
+                        <div
+                            style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.9rem;">
+                            <span>10 KWD</span>
+                            <span>150+ KWD</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-widget">
+                        <h4>Colors</h4>
+                        <div class="color-filter">
+                            <div class="color-item" style="background-color: #000000;" title="Midnight Black"></div>
+                            <div class="color-item" style="background-color: #D4AF37;" title="Metallic Gold"></div>
+                            <div class="color-item" style="background-color: #F5F5DC;" title="Beige"></div>
+                            <div class="color-item" style="background-color: #800020;" title="Burgundy"></div>
+                            <div class="color-item" style="background-color: #000080;" title="Navy"></div>
+                            <div class="color-item" style="background-color: #FFFFFF; border-color:#DDD;" title="White">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-widget">
+                        <h4>Fabric</h4>
+                        <ul class="filter-list">
+                            <li><label><input type="checkbox"> Italian Silk</label></li>
+                            <li><label><input type="checkbox"> Premium Nida</label></li>
+                            <li><label><input type="checkbox"> Linen Blend</label></li>
+                            <li><label><input type="checkbox"> Chiffon</label></li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- Product Grid -->
+                <main class="shop-content">
+                    <div class="shop-controls">
+                        <div>Showing 1–9 of 45 results</div>
+                        <div>
+                            <select>
+                                <option>Sort By: Default</option>
+                                <option>Sort By: Popularity</option>
+                                <option>Sort By: Latest</option>
+                                <option>Sort By: Price (Low to High)</option>
+                                <option>Sort By: Price (High to Low)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="shop-grid">
+                        <!-- Product 1 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <span class="product-tag">Iconic</span>
+                                <img src="images/luxury_abaya.png" alt="Royal Black Abaya">
+                                <div class="product-actions">
+                                    <button class="action-btn" title="Add to Cart"><i
+                                            class="fa-solid fa-cart-plus"></i></button>
+                                    <button class="action-btn" title="Add to Wishlist"><i
+                                            class="fa-regular fa-heart"></i></button>
+                                    <a href="product-details.html" class="action-btn" title="Quick View"><i
+                                            class="fa-regular fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h4>Midnight Noir Abaya</h4>
+                                <div class="price">45 KWD</div>
+                            </div>
+                        </div>
+
+                        <!-- Product 2 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="images/party_abaya.png" alt="Golden Sleeve Abaya">
+                                <div class="product-actions">
+                                    <button class="action-btn" title="Add to Cart"><i
+                                            class="fa-solid fa-cart-plus"></i></button>
+                                    <button class="action-btn" title="Add to Wishlist"><i
+                                            class="fa-regular fa-heart"></i></button>
+                                    <a href="product-details.html" class="action-btn" title="Quick View"><i
+                                            class="fa-regular fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h4>Gilded Embroidery Abaya</h4>
+                                <div class="price">52 KWD</div>
+                            </div>
+                        </div>
+
+                        <!-- Product 3 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="images/casual_abaya.png" alt="Pearl Elegance">
+                                <div class="product-actions">
+                                    <button class="action-btn" title="Add to Cart"><i
+                                            class="fa-solid fa-cart-plus"></i></button>
+                                    <button class="action-btn" title="Add to Wishlist"><i
+                                            class="fa-regular fa-heart"></i></button>
+                                    <a href="product-details.html" class="action-btn" title="Quick View"><i
+                                            class="fa-regular fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h4>Pearl Drape Elegance</h4>
+                                <div class="price">49 KWD</div>
+                            </div>
+                        </div>
+
+                        <!-- Product 4 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <span class="product-tag" style="background-color: var(--text);">Exclusive</span>
+                                <img src="images/hijab.png" alt="Silk Hijab">
+                                <div class="product-actions">
+                                    <button class="action-btn" title="Add to Cart"><i
+                                            class="fa-solid fa-cart-plus"></i></button>
+                                    <button class="action-btn" title="Add to Wishlist"><i
+                                            class="fa-regular fa-heart"></i></button>
+                                    <a href="product-details.html" class="action-btn" title="Quick View"><i
+                                            class="fa-regular fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h4>Cashmere Blend Hijab</h4>
+                                <div class="price">15 KWD</div>
+                            </div>
+                        </div>
+
+                        <!-- Product 5 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="images/luxury_abaya.png" alt="Royal Black Abaya">
+                                <div class="product-actions">
+                                    <button class="action-btn" title="Add to Cart"><i
+                                            class="fa-solid fa-cart-plus"></i></button>
+                                    <button class="action-btn" title="Add to Wishlist"><i
+                                            class="fa-regular fa-heart"></i></button>
+                                    <a href="product-details.html" class="action-btn" title="Quick View"><i
+                                            class="fa-regular fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h4>Onyx Shimmer Abaya</h4>
+                                <div class="price">65 KWD</div>
+                            </div>
+                        </div>
+
+                        <!-- Product 6 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="images/party_abaya.png" alt="Golden Sleeve Abaya">
+                                <div class="product-actions">
+                                    <button class="action-btn" title="Add to Cart"><i
+                                            class="fa-solid fa-cart-plus"></i></button>
+                                    <button class="action-btn" title="Add to Wishlist"><i
+                                            class="fa-regular fa-heart"></i></button>
+                                    <a href="product-details.html" class="action-btn" title="Quick View"><i
+                                            class="fa-regular fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h4>Desert Rose Evening Abaya</h4>
+                                <div class="price">58 KWD</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination">
+                        <a href="#" class="page-link active">1</a>
+                        <a href="#" class="page-link">2</a>
+                        <a href="#" class="page-link">3</a>
+                        <a href="#" class="page-link"><i class="fa-solid fa-chevron-right"></i></a>
+                    </div>
+                </main>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">Yasmin <span>Abaya</span></a>
+                    <p style="margin-bottom: 20px; line-height: 1.9;">Defining luxury modest fashion in the heart of
+                        Kuwait. We blend rich heritage with contemporary haute couture to create unparalleled
+                        masterpieces.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>The House</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">The Atelier</a></li>
+                        <li><a href="#">Boutiques</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Client Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Care Instructions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Boutique</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i>
+                            <div><strong>Flagship Store</strong><br>Salhiya Complex, Kuwait</div>
+                        </li>
+                        <li><i class="fa-solid fa-phone"></i>
+                            <div><strong>Concierge</strong><br>+965 9999 0000</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Yasmin Abaya House. All Rights Reserved. | Designed for The Modern Aristocrat</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="cart.js"></script>
+    <script>
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const navLinks = document.getElementById('nav-links');
+        mobileToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+    </script>
+</body>
+
+</html>
