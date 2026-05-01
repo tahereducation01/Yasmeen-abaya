@@ -78,7 +78,8 @@
         }
 
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             padding: 12px 15px;
             border: 1px solid var(--border);
             font-family: var(--font-body);
@@ -87,7 +88,8 @@
         }
 
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             border-color: var(--secondary);
         }
 
@@ -128,21 +130,56 @@
             font-weight: 600;
         }
 
-        .payment-methods {
-            margin-top: 25px;
-            margin-bottom: 25px;
+        .payment-icons {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+            color: #555;
+            font-size: 1.2rem;
+            align-items: center;
+        }
+
+        .payment-desc {
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 5px;
+            margin-left: 25px;
+            display: none;
+        }
+
+        .payment-method.active .payment-desc {
+            display: block;
         }
 
         .payment-method {
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .payment-method.active {
+            border-color: var(--secondary);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .payment-method label {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
             cursor: pointer;
+            width: 100%;
         }
 
         .payment-method input[type="radio"] {
             accent-color: var(--primary);
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
         }
 
         .place-order-btn {
@@ -155,6 +192,7 @@
             font-size: 1.05rem;
             cursor: pointer;
             transition: all 0.3s;
+            margin-top: 25px;
         }
 
         .place-order-btn:hover {
@@ -191,7 +229,10 @@
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="index.html" class="logo">Yasmin <span>Abaya</span></a>
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Yasmin Abaya">
+                Yasmin <span>Abaya</span>
+            </a>
             <div style="font-size: 1.2rem; color: #777;"><i class="fa-solid fa-lock"></i> Secure Checkout</div>
         </div>
     </nav>
@@ -215,7 +256,7 @@
                     </div>
 
                     <form id="checkout-form"
-                        onsubmit="event.preventDefault(); alert('Order Placed Successfully!'); window.location.href='index.html';">
+                        onsubmit="event.preventDefault(); localStorage.removeItem('Yasmin_cart'); alert('Order Placed Successfully!'); window.location.href='index.html';">
 
                         <!-- Contact Info -->
                         <div class="form-section">
@@ -224,10 +265,10 @@
                                 <label>Email Address</label>
                                 <input type="email" required placeholder="For order confirmation">
                             </div>
-                            <div class="form-group">
-                                <label>Phone / WhatsApp Number</label>
-                                <input type="tel" required placeholder="+965 xxxx xxxx">
-                            </div>
+                             <div class="form-group">
+                                 <label>Phone / WhatsApp Number</label>
+                                 <input type="tel" id="checkout-phone" required placeholder="+965 xxxx xxxx">
+                             </div>
                         </div>
 
                         <!-- Shipping Info -->
@@ -245,15 +286,15 @@
                             </div>
 
                             <div class="form-group" style="margin-bottom: 20px;">
-                                <label>Area / District</label>
-                                <select required>
+                                <label>Country</label>
+                                <input type="text" id="checkout-country" readonly style="background-color: #FAFAFA; color: #555; cursor: not-allowed;" value="Kuwait">
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label>Area / District / State</label>
+                                <select required id="checkout-area-select">
                                     <option value="">Select Area...</option>
-                                    <option>Kuwait City</option>
-                                    <option>Hawalli</option>
-                                    <option>Salmiya</option>
-                                    <option>Al Ahmadi</option>
-                                    <option>Farwaniya</option>
-                                    <option>Jahra</option>
+                                    <!-- Options will be populated by JS based on region -->
                                 </select>
                             </div>
 
@@ -267,7 +308,6 @@
                                     <input type="text" required>
                                 </div>
                             </div>
-
                             <div class="form-row">
                                 <div class="form-group">
                                     <label>House / Building</label>
@@ -275,6 +315,51 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Apartment (Optional)</label>
+                                    <input type="text">
+                                </div>
+                            </div>
+
+                            <!-- Order Notes -->
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label>Order Notes / Delivery Instructions (Optional)</label>
+                                <textarea rows="3" placeholder="e.g. Special delivery instructions or size adjustments..."></textarea>
+                            </div>
+
+                            <!-- Billing Address Toggle -->
+                            <div style="margin-top: 25px;">
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.95rem;">
+                                    <input type="checkbox" id="different-billing" onchange="toggleBilling()" style="width: 18px; height: 18px; accent-color: var(--primary);">
+                                    Billing address is different from shipping address
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Billing Info (Hidden by default) -->
+                        <div class="form-section" id="billing-section" style="display: none;">
+                            <h3>Billing Address</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label>Address Line 1</label>
+                                <input type="text" placeholder="Street name, P.O. Box">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>City / Town</label>
+                                    <input type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Postcode / ZIP</label>
                                     <input type="text">
                                 </div>
                             </div>
@@ -288,27 +373,28 @@
                                 <div class="payment-method active" id="pm-knet" onclick="selectPayment('pm-knet')">
                                     <label>
                                         <input type="radio" name="payment" checked>
-                                        KNET / Visa / Mastercard
+                                        KNET (Kuwait Local Cards)
+                                        <div class="payment-icons">
+                                            <i class="fa-solid fa-credit-card"></i>
+                                            <span style="font-weight: 700; font-size: 0.8rem;">K-NET</span>
+                                        </div>
+                                    </label>
+                                    <div class="payment-desc">
+                                        Secure payment using your Kuwaiti K-NET debit card.
+                                    </div>
+                                </div>
+
+                                <div class="payment-method" id="pm-card" onclick="selectPayment('pm-card')">
+                                    <label>
+                                        <input type="radio" name="payment">
+                                        Credit Card (Visa / Mastercard)
                                         <div class="payment-icons">
                                             <i class="fa-brands fa-cc-visa"></i>
                                             <i class="fa-brands fa-cc-mastercard"></i>
                                         </div>
                                     </label>
                                     <div class="payment-desc">
-                                        You will be securely redirected to the KNET gateway to complete your purchase.
-                                    </div>
-                                </div>
-
-                                <div class="payment-method" id="pm-apple" onclick="selectPayment('pm-apple')">
-                                    <label>
-                                        <input type="radio" name="payment">
-                                        Apple Pay
-                                        <div class="payment-icons">
-                                            <i class="fa-brands fa-apple"></i>
-                                        </div>
-                                    </label>
-                                    <div class="payment-desc">
-                                        Pay seamlessly and securely with Apple Pay.
+                                        Pay securely using your international or local credit card.
                                     </div>
                                 </div>
 
@@ -321,7 +407,7 @@
                                         </div>
                                     </label>
                                     <div class="payment-desc">
-                                        Pay with cash or card upon delivery. A small handling fee may apply.
+                                        Pay with cash upon delivery to your doorstep.
                                     </div>
                                 </div>
                             </div>
@@ -333,39 +419,35 @@
                     <div class="summary-box">
                         <h3>Order Summary</h3>
 
-                        <div class="order-items">
-                            <div class="order-item">
-                                <img src="images/luxury_abaya.png" alt="Product">
-                                <div class="order-item-info">
-                                    <h5>Midnight Noir Abaya</h5>
-                                    <p>Size: 54 | Color: Black</p>
-                                    <p>Qty: 1</p>
-                                </div>
-                                <div class="order-item-price">45 KWD</div>
+                        <div class="order-items" id="checkout-items-list">
+                            <!-- Dynamic Items -->
+                        </div>
+
+                        <!-- Promo Code Section -->
+                        <div style="margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border);">
+                            <div style="display:flex; gap:10px;">
+                                <input type="text" id="promo-code-input" placeholder="Promo Code" style="flex-grow:1; padding:10px; border:1px solid var(--border); font-size:0.9rem; outline:none;">
+                                <button id="apply-promo-btn" style="padding:10px 15px; background:var(--primary); color:white; border:none; cursor:pointer; font-size:0.8rem; text-transform:uppercase;">Apply</button>
                             </div>
-                            <div class="order-item">
-                                <img src="images/hijab.png" alt="Product">
-                                <div class="order-item-info">
-                                    <h5>Cashmere Blend Hijab</h5>
-                                    <p>Color: Beige</p>
-                                    <p>Qty: 2</p>
-                                </div>
-                                <div class="order-item-price">30 KWD</div>
-                            </div>
+                            <div id="promo-msg" style="font-size:0.75rem; margin-top:5px; display:none;"></div>
                         </div>
 
                         <div class="summary-row">
                             <span>Subtotal</span>
-                            <span>75 KWD</span>
+                            <span id="checkout-subtotal">0 KWD</span>
+                        </div>
+                        <div class="summary-row" id="tax-row" style="display:none;">
+                            <span id="tax-label">Estimated Tax</span>
+                            <span id="tax-value">0 KWD</span>
                         </div>
                         <div class="summary-row">
                             <span>Shipping</span>
-                            <span>0 KWD</span>
+                            <span style="color:var(--secondary)">Complimentary</span>
                         </div>
 
                         <div class="summary-row summary-total">
                             <span>Total Due</span>
-                            <span>75 KWD</span>
+                            <span id="checkout-total">0 KWD</span>
                         </div>
 
                         <button type="submit" class="place-order-btn" form="checkout-form">Place Order</button>
@@ -376,20 +458,225 @@
                     </div>
                 </div>
 
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const cart = JSON.parse(localStorage.getItem('Yasmin_cart')) || [];
+                        const itemsList = document.getElementById('checkout-items-list');
+                        const subtotalEl = document.getElementById('checkout-subtotal');
+                        const totalEl = document.getElementById('checkout-total');
+
+                        const validCodes = {
+                            'YASMIN10': { type: 'percent', value: 10 },
+                            'WELCOME20': { type: 'percent', value: 20 },
+                            'VIP50': { type: 'percent', value: 50 },
+                            'LUXURY5': { type: 'percent', value: 5 }
+                        };
+
+                        const updateCheckoutSummary = () => {
+                            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                            const selectedRegionJson = localStorage.getItem('yasmin_selected_country');
+                            const regionData = selectedRegionJson ? JSON.parse(selectedRegionJson) : null;
+                            const regionName = regionData ? regionData.name : 'Kuwait';
+                            
+                            const taxRates = {
+                                'Kuwait': 0, 'India': 12, 'UAE': 5, 'Saudi Arabia': 15,
+                                'Bahrain': 10
+                            };
+                            const taxRate = taxRates[regionName] || 0;
+
+                            // Promo Logic
+                            const promo = JSON.parse(localStorage.getItem('Yasmin_promo')) || null;
+                            let discountAmount = 0;
+                            
+                            // Remove existing discount row if any
+                            const existingDisc = document.getElementById('checkout-discount-row');
+                            if (existingDisc) existingDisc.remove();
+
+                            if (promo) {
+                                if (promo.type === 'percent') {
+                                    discountAmount = (subtotal * promo.value) / 100;
+                                } else {
+                                    discountAmount = promo.value;
+                                }
+                                
+                                 const discRow = document.createElement('div');
+                                 discRow.id = 'checkout-discount-row';
+                                 discRow.className = 'summary-row';
+                                 discRow.style.color = '#e53e3e';
+                                 discRow.innerHTML = `<span>Discount (${promo.code})</span><span>-${discountAmount}</span>`;
+                                 discRow.querySelector('span:last-child').dataset.basePrice = -discountAmount;
+                                 subtotalEl.parentElement.insertAdjacentElement('afterend', discRow);
+                            }
+
+                            const taxAmount = (subtotal * taxRate) / 100;
+                            const total = Math.max(0, subtotal - discountAmount + taxAmount);
+
+                            const taxRow = document.getElementById('tax-row');
+                            if (taxRow) {
+                                if (taxRate > 0) {
+                                    taxRow.style.display = 'flex';
+                                    const taxLabel = document.getElementById('tax-label');
+                                    const taxValue = document.getElementById('tax-value');
+                                    if (taxLabel) taxLabel.innerText = localStorage.getItem('yasmin_lang') === 'ar' ? `ضريبة (${taxRate}%)` : `Estimated Tax (${taxRate}%)`;
+                                     if (taxValue) {
+                                         taxValue.innerText = taxAmount;
+                                         taxValue.dataset.basePrice = taxAmount;
+                                     }
+                                } else {
+                                    taxRow.style.display = 'none';
+                                }
+                            }
+
+                            subtotalEl.textContent = subtotal + ' KWD';
+                            subtotalEl.dataset.basePrice = subtotal;
+                            totalEl.textContent = total + ' KWD';
+                            totalEl.dataset.basePrice = total;
+                            
+                            if (window.updateRegionUI) updateRegionUI();
+                        };
+
+                        const applyBtn = document.getElementById('apply-promo-btn');
+                        const promoInput = document.getElementById('promo-code-input');
+                        const promoMsg = document.getElementById('promo-msg');
+
+                        if (applyBtn) {
+                            applyBtn.addEventListener('click', () => {
+                                const code = promoInput.value.trim().toUpperCase();
+                                if (validCodes[code]) {
+                                    localStorage.setItem('Yasmin_promo', JSON.stringify({
+                                        code: code,
+                                        ...validCodes[code]
+                                    }));
+                                    promoMsg.style.display = 'block';
+                                    promoMsg.style.color = 'green';
+                                    promoMsg.innerText = 'Promo applied!';
+                                    updateCheckoutSummary();
+                                } else {
+                                    promoMsg.style.display = 'block';
+                                    promoMsg.style.color = 'red';
+                                    promoMsg.innerText = 'Invalid code.';
+                                }
+                            });
+                        }
+
+                        if (cart.length === 0) {
+                            window.location.href = 'cart.html';
+                            return;
+                        }
+
+                        let subtotal = 0;
+                        itemsList.innerHTML = '';
+
+                        cart.forEach(item => {
+                            const itemTotal = item.price * item.quantity;
+                            subtotal += itemTotal;
+
+                            const div = document.createElement('div');
+                            div.className = 'order-item';
+                            div.innerHTML = `
+                                <div style="display:flex; gap:15px;">
+                                    <img src="${item.image}" alt="${item.title}" style="width:60px; height:80px; object-fit:cover;">
+                                    <div>
+                                        <h5 style="margin-bottom:5px;">${item.title}</h5>
+                                        <p style="font-size:0.8rem; color:#777;">Qty: ${item.quantity} | Size: ${item.size}</p>
+                                    </div>
+                                </div>
+                                <div class="order-item-price" data-base-price="${item.price}">${item.price} KWD</div>
+                            `;
+                            itemsList.appendChild(div);
+                        });
+
+                        updateCheckoutSummary();
+
+                        // Regional Adjustments
+                        const selectedRegionJson = localStorage.getItem('yasmin_selected_country');
+                        const regionData = selectedRegionJson ? JSON.parse(selectedRegionJson) : null;
+                        const regionName = regionData ? regionData.name : 'Kuwait';
+
+                        // 1. Payment Methods: Hide KNET if not Kuwait
+                        const knetMethod = document.getElementById('pm-knet');
+                        const ccMethod = document.getElementById('pm-card');
+                        if (regionName !== 'Kuwait' && knetMethod) {
+                            knetMethod.style.display = 'none';
+                            // Select CC by default if KNET is hidden
+                            if (ccMethod) {
+                                ccMethod.click();
+                            }
+                        }
+
+                        // 2. Phone Prefix & Placeholder
+                        const phoneInput = document.getElementById('checkout-phone');
+                        if (phoneInput) {
+                            if (regionName === 'India') {
+                                phoneInput.placeholder = '+91 xxxxx xxxxx';
+                                phoneInput.value = '+91 ';
+                            } else if (regionName === 'UAE') {
+                                phoneInput.placeholder = '+971 xx xxx xxxx';
+                                phoneInput.value = '+971 ';
+                            } else if (regionName === 'Saudi Arabia') {
+                                phoneInput.placeholder = '+966 xx xxx xxxx';
+                                phoneInput.value = '+966 ';
+                            } else if (regionName === 'Bahrain') {
+                                phoneInput.placeholder = '+973 xxxx xxxx';
+                                phoneInput.value = '+973 ';
+                            }
+                        }
+
+                        // 3. Dynamic Areas & Country based on Region
+                        const areaSelect = document.getElementById('checkout-area-select');
+                        const countryInput = document.getElementById('checkout-country');
+                        
+                        if (countryInput) {
+                            countryInput.value = regionName;
+                        }
+
+                        if (areaSelect) {
+                            const areasByRegion = {
+                                'Kuwait': ['Kuwait City', 'Hawalli', 'Salmiya', 'Al Ahmadi', 'Farwaniya', 'Jahra'],
+                                'UAE': ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain'],
+                                'Saudi Arabia': ['Riyadh', 'Jeddah', 'Mecca', 'Medina', 'Dammam', 'Khobar', 'Dhahran'],
+                                'India': ['Maharashtra', 'Delhi', 'Karnataka', 'Tamil Nadu', 'Gujarat', 'Uttar Pradesh', 'Kerala', 'Other'],
+                                'Bahrain': ['Manama', 'Muharraq', 'Riffa', 'Hamad Town', 'Isa Town', 'Sitra', 'Budaiya']
+                            };
+
+                            const areas = areasByRegion[regionName] || areasByRegion['Kuwait'];
+                            
+                            // Clear existing options just in case
+                            areaSelect.innerHTML = '<option value="">Select Area...</option>';
+                            
+                            areas.forEach(area => {
+                                const option = document.createElement('option');
+                                option.value = area;
+                                option.textContent = area;
+                                areaSelect.appendChild(option);
+                            });
+                        }
+                    });
+                </script>
+
                 <!-- Removed invalid form end tag -->
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer style="padding: 40px 0;">
+    <footer>
         <div class="container">
-            <div class="footer-bottom" style="margin-top:0; border:none;">
-                <p>&copy; 2026 Yasmin Abaya House. All Rights Reserved.</p>
+            <div class="footer-grid" style="display: flex; justify-content: space-between; align-items: center; padding: 40px 0;">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <img src="images/logo.png" alt="Yasmin Abaya" style="height: 60px;">
+                        <div class="footer-logo-text" style="font-size: 1.1rem;">Yasmin <span style="color: var(--secondary);">Abaya</span></div>
+                    </a>
+                </div>
+                <div class="footer-bottom" style="margin: 0; border: none;">
+                    <p>&copy; 2026 Yasmin Abaya House. All Rights Reserved.</p>
+                </div>
             </div>
         </div>
     </footer>
 
+    <script src="region.js"></script>
     <script>
         function selectPayment(id) {
             document.querySelectorAll('.payment-method').forEach(el => {
@@ -399,6 +686,12 @@
             const selected = document.getElementById(id);
             selected.classList.add('active');
             selected.querySelector('input').checked = true;
+        }
+
+        function toggleBilling() {
+            const billingSection = document.getElementById('billing-section');
+            const checkbox = document.getElementById('different-billing');
+            billingSection.style.display = checkbox.checked ? 'block' : 'none';
         }
     </script>
 </body>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Yasmin Abaya | Select Your Region</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #111111;
+            --secondary: #D4AF37;
+            --text-light: #FFFFFF;
+            --text-muted: #AAAAAA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary);
+            color: var(--text-light);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .landing-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 20px;
+            text-align: center;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--secondary);
+            font-style: italic;
+            text-transform: capitalize;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .instruction {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: #EEE;
+        }
+
+        .country-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Custom Scrollbar */
+        .country-grid::-webkit-scrollbar {
+            width: 3px;
+        }
+        .country-grid::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        .country-grid::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+        }
+
+        .country-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 15px 25px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .country-btn:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: scale(1.02);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .country-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .country-name {
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-size: 1.05rem;
+        }
+
+        .flag-img {
+            width: 30px;
+            height: 20px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .arrow {
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        .country-btn:hover .arrow {
+            opacity: 1;
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: visible;
+            overflow: hidden;
+        }
+        .preloader::before,
+        .preloader::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: var(--primary);
+            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: -1;
+        }
+        .preloader::before { top: 0; }
+        .preloader::after { bottom: 0; }
+        .preloader.fade-out::before { transform: translateY(-100%); }
+        .preloader.fade-out::after { transform: translateY(100%); }
+        .preloader.fade-out { visibility: hidden; transition-delay: 1s; }
+        .loader-content { text-align: center; transition: opacity 0.5s ease; }
+        .preloader.fade-out .loader-content { opacity: 0; }
+        .loader-logo-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 40px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 4px solid var(--secondary);
+            background: #FFF;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+        }
+        .loader-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: logoReveal 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .logo-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.4), transparent);
+            animation: logoShine 4s infinite linear;
+        }
+        .loader-text {
+            font-family: var(--font-heading);
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.8s forwards;
+        }
+        @keyframes logoReveal {
+            0% { transform: scale(1.1); opacity: 0; filter: blur(5px); }
+            30% { opacity: 1; filter: blur(0); }
+            100% { transform: scale(1); opacity: 1; filter: blur(0); }
+        }
+        @keyframes logoShine {
+            0% { transform: translateX(-150%) rotate(45deg); }
+            100% { transform: translateX(150%) rotate(45deg); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .loader-logo-container {
+                width: 180px;
+                height: 180px;
+                margin-bottom: 25px;
+                border-width: 3px;
+            }
+            .loader-text {
+                font-size: 1.1rem;
+                letter-spacing: 6px;
+            }
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            color: #FFF;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .logo span { color: var(--secondary); font-style: italic; text-transform: none; }
+        .logo img { 
+            height: 90px; 
+            width: 90px; 
+            object-fit: cover; 
+            border-radius: 50%;
+            border: 2px solid var(--secondary);
+            background-color: #FFF; /* Keeps the logo clear but circular */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader-content">
+            <div class="loader-logo-container">
+                <img src="images/logo.png" alt="Yasmin Abaya" class="loader-logo">
+                <div class="logo-shine"></div>
+            </div>
+            <div class="loader-text">Yasmin Abaya</div>
+        </div>
+    </div>
+
+    <div class="landing-container">
+        <div class="logo">
+            <img src="images/logo.png" alt="Yasmin Abaya">
+            Yasmin <span>Abaya</span>
+        </div>
+        <div class="tagline">The Epitome of Modest Luxury</div>
+        
+        <div class="lang-selector" style="margin-bottom: 30px;">
+            <button id="lang-en" class="lang-btn active" onclick="setLang('en')">English</button>
+            <button id="lang-ar" class="lang-btn" onclick="setLang('ar')">العربية</button>
+        </div>
+
+        <h2 class="instruction" id="instruction-text">Select Your Region</h2>
+
+        <div class="country-grid" id="country-grid">
+            <!-- UAE -->
+            <button class="country-btn" onclick="selectCountry('UAE', 'AED', 'uae')">
+                <div class="country-info">
+                    <img src="https://flagcdn.com/w40/ae.png" alt="UAE Flag" class="flag-img">
+                    <span class="country-name">United Arab Emirates</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow"></i>
+            </button>
+
+            <!-- Kuwait -->
+            <button class="country-btn" onclick="selectCountry('Kuwait', 'KWD', 'kw')">
+                <div class="country-info">
+                    <img src="https://flagcdn.com/w40/kw.png" alt="Kuwait Flag" class="flag-img">
+                    <span class="country-name">Kuwait</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow"></i>
+            </button>
+
+            <!-- Saudi Arabia -->
+            <button class="country-btn" onclick="selectCountry('Saudi Arabia', 'SAR', 'sa')">
+                <div class="country-info">
+                    <img src="https://flagcdn.com/w40/sa.png" alt="Saudi Flag" class="flag-img">
+                    <span class="country-name">Saudi Arabia</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow"></i>
+            </button>
+
+            <!-- Bahrain -->
+            <button class="country-btn" onclick="selectCountry('Bahrain', 'BHD', 'bh')">
+                <div class="country-info">
+                    <img src="https://flagcdn.com/w40/bh.png" alt="Bahrain Flag" class="flag-img">
+                    <span class="country-name">Bahrain</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow"></i>
+            </button>
+
+            <!-- India -->
+            <button class="country-btn" onclick="selectCountry('India', 'INR', 'in')">
+                <div class="country-info">
+                    <img src="https://flagcdn.com/w40/in.png" alt="India Flag" class="flag-img">
+                    <span class="country-name">India</span>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow"></i>
+            </button>
+        </div>
+
+        <p class="footer-note" id="footer-text">Experience the collection tailored to your heritage.</p>
+    </div>
+
+    <style>
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #FFF;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        .lang-btn.active {
+            background: var(--secondary);
+            color: var(--primary);
+            border-color: var(--secondary);
+        }
+        [dir="rtl"] .country-btn { flex-direction: row-reverse; text-align: right; }
+        [dir="rtl"] .country-info { flex-direction: row-reverse; }
+        [dir="rtl"] .arrow { transform: rotate(180deg); }
+    </style>
+
+    <script>
+        // Skip preloader if already played
+        if (sessionStorage.getItem('yasmin_preloader_played')) {
+            const preloader = document.getElementById('preloader');
+            if (preloader) preloader.style.display = 'none';
+        }
+
+        let currentLang = localStorage.getItem('yasmin_lang') || 'en';
+        
+        function setLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('yasmin_lang', lang);
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+            
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.getElementById('instruction-text').textContent = 'اختر منطقتك';
+                document.getElementById('footer-text').textContent = 'استمتع بمجموعة مصممة خصيصاً لتناسب تراثك';
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.getElementById('instruction-text').textContent = 'Select Your Region';
+                document.getElementById('footer-text').textContent = 'Experience the collection tailored to your heritage.';
+            }
+        }
+
+        // Initialize lang
+        setLang(currentLang);
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.classList.add('fade-out');
+                    sessionStorage.setItem('yasmin_preloader_played', 'true');
+                }
+            }, 3000);
+        });
+
+        function selectCountry(name, currency, code) {
+            const countryData = {
+                name: name,
+                currency: currency,
+                code: code,
+                selectedAt: new Date().getTime()
+            };
+            localStorage.setItem('yasmin_selected_country', JSON.stringify(countryData));
+            sessionStorage.setItem('yasmin_preloader_played', 'true');
+            
+            document.querySelector('.landing-container').style.opacity = '0';
+            document.querySelector('.landing-container').style.transform = 'scale(0.95)';
+            document.querySelector('.landing-container').style.transition = 'all 0.5s ease';
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>

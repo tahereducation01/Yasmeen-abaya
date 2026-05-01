@@ -248,13 +248,25 @@
 
 <body>
 
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="container">
+            <span><i class="fa-solid fa-gem"></i> Premium Quality Guaranteed</span>
+            <span style="letter-spacing: 2px;">Complimentary Delivery Across Kuwait</span>
+            <span><i class="fa-brands fa-whatsapp"></i> Personal Shopper</span>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <button class="mobile-toggle" id="mobile-toggle">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
-            <a href="index.html" class="logo">Yasmin <span>Abaya</span></a>
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Yasmin Abaya">
+                Yasmin <span>Abaya</span>
+            </a>
             <div class="nav-links" id="nav-links">
                 <a href="index.html">Home</a>
                 <a href="shop.html">The Atelier</a>
@@ -287,7 +299,7 @@
 
                 <div class="cart-items">
                     <table class="cart-table">
-                        <th>
+                        <thead>
                             <tr>
                                 <th>Product</th>
                                 <th>Price</th>
@@ -312,8 +324,12 @@
                         <span>Subtotal</span>
                         <span>75 KWD</span>
                     </div>
+                    <div class="summary-row" id="tax-row" style="display:none;">
+                        <span id="tax-label">Estimated Tax</span>
+                        <span id="tax-value">0 KWD</span>
+                    </div>
                     <div class="summary-row">
-                        <span>Shipping (Kuwait)</span>
+                        <span>Shipping</span>
                         <span style="color:var(--secondary)">Complimentary</span>
                     </div>
 
@@ -340,12 +356,52 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-bottom" style="margin-top:0;">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <img src="images/logo.png" alt="Yasmin Abaya">
+                        <div class="footer-logo-text">Yasmin <span style="color: var(--secondary);">Abaya</span></div>
+                    </a>
+                    <p style="margin-bottom: 20px; line-height: 1.9;">Defining luxury modest fashion in the heart of
+                        Kuwait. We blend rich heritage with contemporary haute couture to create unparalleled
+                        masterpieces.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>The House</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">The Atelier</a></li>
+                        <li><a href="#">Boutiques</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Client Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Boutique</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i>
+                            <div><strong>Flagship Store</strong><br>Salhiya Complex, Kuwait City</div>
+                        </li>
+                        <li><i class="fa-solid fa-phone"></i>
+                            <div><strong>Concierge</strong><br>+965 9789 9852</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
                 <p>&copy; 2026 Yasmin Abaya House. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="region.js"></script>
     <script src="cart.js"></script>
     <script>
         document.getElementById('mobile-toggle').addEventListener('click', () => {

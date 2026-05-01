@@ -203,24 +203,37 @@
             }
 
             .sidebar {
-                width: 100%;
-                display: flex;
-                overflow-x: auto;
-                padding: 20px;
+                position: fixed;
+                left: -280px;
+                top: 0;
+                bottom: 0;
+                height: 100vh;
+                background-color: #111;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                box-shadow: 10px 0 30px rgba(0,0,0,0.2);
+                overflow-y: auto;
+                width: 280px;
+                display: block;
+            }
+
+            .sidebar.active {
+                left: 0;
             }
 
             .sidebar h2 {
-                margin-bottom: 0;
-                margin-right: 30px;
+                margin-bottom: 30px;
+                padding: 0 30px;
+                color: #fff;
             }
 
             .nav-menu {
-                display: flex;
-                gap: 15px;
+                flex-direction: column;
+                gap: 0;
             }
 
-            .nav-menu li {
-                margin-bottom: 0;
+            #menu-toggle {
+                display: block !important;
             }
         }
 
@@ -396,12 +409,22 @@
 
     <script>
         // Simple mobile menu toggle logic
-        if (window.innerWidth <= 768) {
-            document.getElementById('menu-toggle').style.display = 'block';
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sidebar.classList.toggle('active');
+            });
+
+            // Close sidebar when clicking outside
+            document.addEventListener('click', (e) => {
+                if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== menuToggle) {
+                    sidebar.classList.remove('active');
+                }
+            });
         }
-        document.getElementById('menu-toggle').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('active');
-        });
     </script>
 </body>
 

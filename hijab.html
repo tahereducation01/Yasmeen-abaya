@@ -190,18 +190,23 @@
 
 <body>
 
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader-content">
+            <div class="loader-logo-container">
+                <img src="images/logo.png" alt="Yasmin Abaya" class="loader-logo">
+                <div class="logo-shine"></div>
+            </div>
+            <div class="loader-text">Yasmin Abaya</div>
+        </div>
+    </div>
+
     <!-- Topbar -->
     <div class="topbar">
         <div class="container">
-            <div class="topbar">
-                <span><i class="fa-solid fa-gem"></i> Premium Quality Guaranteed</span>
-            </div>
-            <div class="topbar" style="letter-spacing: 2px;">
-                <span>Complimentary Delivery Across Kuwait</span>
-            </div>
-            <div class="topbar">
-                <span><i class="fa-brands fa-whatsapp"></i> Personal Shopper</span>
-            </div>
+            <span><i class="fa-solid fa-gem"></i> Premium Quality Guaranteed</span>
+            <span style="letter-spacing: 2px;">Complimentary Delivery Across Kuwait</span>
+            <span><i class="fa-brands fa-whatsapp"></i> Personal Shopper</span>
         </div>
     </div>
 
@@ -212,7 +217,10 @@
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
 
-            <a href="index.html" class="logo">Yasmin <span>Abaya</span></a>
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Yasmin Abaya">
+                Yasmin <span>Abaya</span>
+            </a>
 
             <div class="nav-links" id="nav-links">
                 <a href="index.html">Home</a>
@@ -225,9 +233,14 @@
 
             <div class="nav-icons">
                 <button aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <button aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
-                <a href="cart.html" aria-label="Cart" style="color:var(--primary)"><i
-                        class="fa-solid fa-bag-shopping"></i></a>
+                <button aria-label="Wishlist">
+                    <i class="fa-regular fa-heart"></i>
+                    <span class="wishlist-count">0</span>
+                </button>
+                <a href="cart.html" aria-label="Cart" style="color:var(--primary)">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-count">0</span>
+                </a>
             </div>
         </div>
     </nav>
@@ -327,7 +340,7 @@
                             </div>
                             <div class="product-info">
                                 <h4>Cashmere Blend Hijab</h4>
-                                <div class="price">15 KWD</div>
+                                <div class="price" data-base-price="15">15 KWD</div>
                             </div>
                         </div>
 
@@ -346,10 +359,10 @@
                             </div>
                             <div class="product-info">
                                 <h4>Pure Silk Ivory Hijab</h4>
-                                <div class="price">22 KWD</div>
+                                <div class="price" data-base-price="22">22 KWD</div>
                             </div>
                         </div>
-                        
+
                         <!-- Product 3 -->
                         <div class="product-card">
                             <div class="product-image">
@@ -365,7 +378,7 @@
                             </div>
                             <div class="product-info">
                                 <h4>Midnight Satin Hijab</h4>
-                                <div class="price">18 KWD</div>
+                                <div class="price" data-base-price="18">18 KWD</div>
                             </div>
                         </div>
                     </div>
@@ -387,7 +400,10 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <a href="index.html" class="footer-logo">Yasmin <span>Abaya</span></a>
+                    <a href="index.html" class="footer-logo">
+                        <img src="images/logo.png" alt="Yasmin Abaya">
+                        <div class="footer-logo-text">Yasmin <span style="color: var(--secondary);">Abaya</span></div>
+                    </a>
                     <p style="margin-bottom: 20px; line-height: 1.9;">Defining luxury modest fashion in the heart of
                         Kuwait. We blend rich heritage with contemporary haute couture to create unparalleled
                         masterpieces.</p>
@@ -415,7 +431,7 @@
                             <div><strong>Flagship Store</strong><br>Salhiya Complex, Kuwait</div>
                         </li>
                         <li><i class="fa-solid fa-phone"></i>
-                            <div><strong>Concierge</strong><br>+965 9999 0000</div>
+                            <div><strong>Concierge</strong><br>+965 9789 9852</div>
                         </li>
                     </ul>
                 </div>
@@ -427,12 +443,100 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="region.js"></script>
+    <script src="wishlist.js"></script>
     <script src="cart.js"></script>
     <script>
-        const mobileToggle = document.getElementById('mobile-toggle');
-        const navLinks = document.getElementById('nav-links');
-        mobileToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (sessionStorage.getItem('yasmin_preloader_played')) {
+                preloader.style.display = 'none';
+                return;
+            }
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+                sessionStorage.setItem('yasmin_preloader_played', 'true');
+            }, 3000);
+        });
+
+        // Search Toggle
+        function toggleSearch() {
+            const overlay = document.getElementById('search-overlay');
+            if (overlay) overlay.classList.toggle('active');
+            if (overlay && overlay.classList.contains('active')) {
+                const input = document.getElementById('search-input');
+                if (input) input.focus();
+            }
+        }
+
+
+
+        // Global Search & Wishlist Button Listeners
+        const searchBtn = document.querySelector('[aria-label="Search"]');
+        if (searchBtn) searchBtn.onclick = toggleSearch;
+
+        const wishlistBtn = document.querySelector('[aria-label="Wishlist"]');
+        if (wishlistBtn) {
+            wishlistBtn.onclick = () => Wishlist.toggleDrawer();
+        }
     </script>
+
+    <!-- Search Discovery Portal -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-close" onclick="toggleSearch()"><i class="fa-solid fa-xmark"></i></div>
+
+        <div class="search-container">
+            <div class="search-header-wrap">
+                <h2>Discovery Boutique</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for luxury abayas, hijabs, accessories..." id="search-input">
+                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+
+            <div class="search-discovery-grid">
+                <div class="discovery-section">
+                    <h4>Trending Categories</h4>
+                    <div class="search-tags-wrap">
+                        <span class="search-tag" onclick="location.href='shop.html'">Luxury Abayas</span>
+                        <span class="search-tag" onclick="location.href='signature.html'">Signature Series</span>
+                        <span class="search-tag" onclick="location.href='hijab.html'">Silk Hijabs</span>
+                        <span class="search-tag" onclick="location.href='shop.html'">Evening Wear</span>
+                    </div>
+                </div>
+
+                <div class="discovery-section">
+                    <h4>Editor's Choice</h4>
+                    <div class="trending-list">
+                        <div class="trending-item" onclick="location.href='shop.html'">
+                            <img src="images/luxury_abaya.png" alt="Midnight Noir">
+                            <div class="trending-info">
+                                <h5>Midnight Noir Abaya</h5>
+                                <span>Best Seller</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Drawer -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="wishlist-drawer" id="wishlist-drawer">
+        <div class="wishlist-drawer-header">
+            <h3>Your Wishlist</h3>
+            <div class="close-wishlist" onclick="Wishlist.toggleDrawer()"><i class="fa-solid fa-xmark"></i></div>
+        </div>
+        <div class="wishlist-items-container" id="wishlist-items-container">
+            <!-- Items will be injected here -->
+        </div>
+        <div class="wishlist-drawer-footer">
+            <button class="view-all-btn" onclick="Wishlist.toggleDrawer()">Continue Shopping</button>
+        </div>
+    </div>
+
+
 </body>
 
 </html>
