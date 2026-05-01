@@ -1,4 +1,4 @@
-// Yasmin Abaya - Region & Language Management System
+// AL Yasmeen Abaya - Region & Language Management System
 
 const translations = {
     en: {
@@ -92,8 +92,8 @@ const regionConfig = {
 // Immediate Setup
 (function() {
     const isLandingPage = window.location.pathname.includes('landing.html');
-    const selectedRegion = localStorage.getItem('yasmin_selected_country');
-    const selectedLang = localStorage.getItem('yasmin_lang') || 'en';
+    const selectedRegion = localStorage.getItem('yasmeen_selected_country');
+    const selectedLang = localStorage.getItem('yasmeen_lang') || 'en';
 
     if (!selectedRegion && !isLandingPage) {
         window.location.href = 'landing.html';
@@ -107,8 +107,8 @@ const regionConfig = {
 })();
 
 function updateRegionUI() {
-    const selectedRegionJson = localStorage.getItem('yasmin_selected_country');
-    const lang = localStorage.getItem('yasmin_lang') || 'en';
+    const selectedRegionJson = localStorage.getItem('yasmeen_selected_country');
+    const lang = localStorage.getItem('yasmeen_lang') || 'en';
     if (!selectedRegionJson) return;
     
     const regionData = JSON.parse(selectedRegionJson);
@@ -235,8 +235,8 @@ function addRegionSwitcher(currentName, currentLang) {
         ? (isMobile ? 'ع' : 'العربية')
         : (isMobile ? 'EN' : 'English');
     langToggle.onclick = () => {
-        localStorage.setItem('yasmin_lang', currentLang === 'en' ? 'ar' : 'en');
-        sessionStorage.setItem('yasmin_preloader_played', 'true');
+        localStorage.setItem('yasmeen_lang', currentLang === 'en' ? 'ar' : 'en');
+        sessionStorage.setItem('yasmeen_preloader_played', 'true');
         window.location.reload();
     };
 
@@ -245,8 +245,8 @@ function addRegionSwitcher(currentName, currentLang) {
         langToggle.style.display = 'none';
         // Force English if somehow it was set to Arabic before switching to India
         if (currentLang === 'ar') {
-            localStorage.setItem('yasmin_lang', 'en');
-            sessionStorage.setItem('yasmin_preloader_played', 'true');
+            localStorage.setItem('yasmeen_lang', 'en');
+            sessionStorage.setItem('yasmeen_preloader_played', 'true');
             window.location.reload();
         }
     }
@@ -322,10 +322,10 @@ function showCountrySelector() {
                 btn.style.borderColor = 'rgba(212, 175, 55, 0.2)';
             };
             btn.onclick = () => {
-                localStorage.setItem('yasmin_selected_country', JSON.stringify({
+                localStorage.setItem('yasmeen_selected_country', JSON.stringify({
                     name: c.name, currency: c.currency, code: c.code, selectedAt: new Date().getTime()
                 }));
-                sessionStorage.setItem('yasmin_preloader_played', 'true');
+                sessionStorage.setItem('yasmeen_preloader_played', 'true');
                 window.location.href = 'index.html';
             };
             grid.appendChild(btn);
@@ -358,6 +358,9 @@ function showCountrySelector() {
 }
 
 document.addEventListener('DOMContentLoaded', updateRegionUI);
+
+
+
 
 
 

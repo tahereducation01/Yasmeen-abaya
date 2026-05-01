@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | Yasmin Abaya</title>
+    <title>Checkout | AL Yasmeen Abaya</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -230,8 +230,8 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="images/logo.png" alt="Yasmin Abaya">
-                Yasmin <span>Abaya</span>
+                <img src="images/logo.png" alt="AL Yasmeen Abaya">
+                Yasmeen <span>Abaya</span>
             </a>
             <div style="font-size: 1.2rem; color: #777;"><i class="fa-solid fa-lock"></i> Secure Checkout</div>
         </div>
@@ -256,7 +256,7 @@
                     </div>
 
                     <form id="checkout-form"
-                        onsubmit="event.preventDefault(); localStorage.removeItem('Yasmin_cart'); alert('Order Placed Successfully!'); window.location.href='index.html';">
+                        onsubmit="event.preventDefault(); localStorage.removeItem('Yasmeen_cart'); alert('Order Placed Successfully!'); window.location.href='index.html';">
 
                         <!-- Contact Info -->
                         <div class="form-section">
@@ -460,13 +460,13 @@
 
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
-                        const cart = JSON.parse(localStorage.getItem('Yasmin_cart')) || [];
+                        const cart = JSON.parse(localStorage.getItem('Yasmeen_cart')) || [];
                         const itemsList = document.getElementById('checkout-items-list');
                         const subtotalEl = document.getElementById('checkout-subtotal');
                         const totalEl = document.getElementById('checkout-total');
 
                         const validCodes = {
-                            'YASMIN10': { type: 'percent', value: 10 },
+                            'YASMEEN10': { type: 'percent', value: 10 },
                             'WELCOME20': { type: 'percent', value: 20 },
                             'VIP50': { type: 'percent', value: 50 },
                             'LUXURY5': { type: 'percent', value: 5 }
@@ -474,7 +474,7 @@
 
                         const updateCheckoutSummary = () => {
                             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                            const selectedRegionJson = localStorage.getItem('yasmin_selected_country');
+                            const selectedRegionJson = localStorage.getItem('yasmeen_selected_country');
                             const regionData = selectedRegionJson ? JSON.parse(selectedRegionJson) : null;
                             const regionName = regionData ? regionData.name : 'Kuwait';
                             
@@ -485,7 +485,7 @@
                             const taxRate = taxRates[regionName] || 0;
 
                             // Promo Logic
-                            const promo = JSON.parse(localStorage.getItem('Yasmin_promo')) || null;
+                            const promo = JSON.parse(localStorage.getItem('Yasmeen_promo')) || null;
                             let discountAmount = 0;
                             
                             // Remove existing discount row if any
@@ -517,7 +517,7 @@
                                     taxRow.style.display = 'flex';
                                     const taxLabel = document.getElementById('tax-label');
                                     const taxValue = document.getElementById('tax-value');
-                                    if (taxLabel) taxLabel.innerText = localStorage.getItem('yasmin_lang') === 'ar' ? `ضريبة (${taxRate}%)` : `Estimated Tax (${taxRate}%)`;
+                                    if (taxLabel) taxLabel.innerText = localStorage.getItem('yasmeen_lang') === 'ar' ? `ضريبة (${taxRate}%)` : `Estimated Tax (${taxRate}%)`;
                                      if (taxValue) {
                                          taxValue.innerText = taxAmount;
                                          taxValue.dataset.basePrice = taxAmount;
@@ -543,7 +543,7 @@
                             applyBtn.addEventListener('click', () => {
                                 const code = promoInput.value.trim().toUpperCase();
                                 if (validCodes[code]) {
-                                    localStorage.setItem('Yasmin_promo', JSON.stringify({
+                                    localStorage.setItem('Yasmeen_promo', JSON.stringify({
                                         code: code,
                                         ...validCodes[code]
                                     }));
@@ -589,7 +589,7 @@
                         updateCheckoutSummary();
 
                         // Regional Adjustments
-                        const selectedRegionJson = localStorage.getItem('yasmin_selected_country');
+                        const selectedRegionJson = localStorage.getItem('yasmeen_selected_country');
                         const regionData = selectedRegionJson ? JSON.parse(selectedRegionJson) : null;
                         const regionName = regionData ? regionData.name : 'Kuwait';
 
@@ -665,12 +665,12 @@
             <div class="footer-grid" style="display: flex; justify-content: space-between; align-items: center; padding: 40px 0;">
                 <div class="footer-col">
                     <a href="index.html" class="footer-logo">
-                        <img src="images/logo.png" alt="Yasmin Abaya" style="height: 60px;">
-                        <div class="footer-logo-text" style="font-size: 1.1rem;">Yasmin <span style="color: var(--secondary);">Abaya</span></div>
+                        <img src="images/logo.png" alt="AL Yasmeen Abaya" style="height: 60px;">
+                        <div class="footer-logo-text" style="font-size: 1.1rem;">Yasmeen <span style="color: var(--secondary);">Abaya</span></div>
                     </a>
                 </div>
                 <div class="footer-bottom" style="margin: 0; border: none;">
-                    <p>&copy; 2026 Yasmin Abaya House. All Rights Reserved.</p>
+                    <p>&copy; 2026 AL Yasmeen Abaya House. All Rights Reserved.</p>
                 </div>
             </div>
         </div>
@@ -697,3 +697,5 @@
 </body>
 
 </html>
+
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Yasmin Abaya | Select Your Region</title>
+    <title>Welcome to AL Yasmeen Abaya | Select Your Region</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -272,17 +272,17 @@
     <div class="preloader" id="preloader">
         <div class="loader-content">
             <div class="loader-logo-container">
-                <img src="images/logo.png" alt="Yasmin Abaya" class="loader-logo">
+                <img src="images/logo.png" alt="AL Yasmeen Abaya" class="loader-logo">
                 <div class="logo-shine"></div>
             </div>
-            <div class="loader-text">Yasmin Abaya</div>
+            <div class="loader-text">AL Yasmeen Abaya</div>
         </div>
     </div>
 
     <div class="landing-container">
         <div class="logo">
-            <img src="images/logo.png" alt="Yasmin Abaya">
-            Yasmin <span>Abaya</span>
+            <img src="images/logo.png" alt="AL Yasmeen Abaya">
+            Yasmeen <span>Abaya</span>
         </div>
         <div class="tagline">The Epitome of Modest Luxury</div>
         
@@ -365,16 +365,16 @@
 
     <script>
         // Skip preloader if already played
-        if (sessionStorage.getItem('yasmin_preloader_played')) {
+        if (sessionStorage.getItem('yasmeen_preloader_played')) {
             const preloader = document.getElementById('preloader');
             if (preloader) preloader.style.display = 'none';
         }
 
-        let currentLang = localStorage.getItem('yasmin_lang') || 'en';
+        let currentLang = localStorage.getItem('yasmeen_lang') || 'en';
         
         function setLang(lang) {
             currentLang = lang;
-            localStorage.setItem('yasmin_lang', lang);
+            localStorage.setItem('yasmeen_lang', lang);
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('lang-' + lang).classList.add('active');
             
@@ -397,7 +397,7 @@
                 const preloader = document.getElementById('preloader');
                 if (preloader) {
                     preloader.classList.add('fade-out');
-                    sessionStorage.setItem('yasmin_preloader_played', 'true');
+                    sessionStorage.setItem('yasmeen_preloader_played', 'true');
                 }
             }, 3000);
         });
@@ -409,8 +409,8 @@
                 code: code,
                 selectedAt: new Date().getTime()
             };
-            localStorage.setItem('yasmin_selected_country', JSON.stringify(countryData));
-            sessionStorage.setItem('yasmin_preloader_played', 'true');
+            localStorage.setItem('yasmeen_selected_country', JSON.stringify(countryData));
+            sessionStorage.setItem('yasmeen_preloader_played', 'true');
             
             document.querySelector('.landing-container').style.opacity = '0';
             document.querySelector('.landing-container').style.transform = 'scale(0.95)';
@@ -424,3 +424,6 @@
 
 </body>
 </html>
+
+
+

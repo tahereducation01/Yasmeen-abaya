@@ -1,12 +1,12 @@
 // cart.js
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize cart from localStorage or empty array
-    let cart = JSON.parse(localStorage.getItem('Yasmin_cart')) || [];
+    let cart = JSON.parse(localStorage.getItem('Yasmeen_cart')) || [];
 
     // --- Helper for Price Formatting (Matches region.js logic) ---
     const formatPrice = (amount) => {
-        const selectedRegionJson = localStorage.getItem('yasmin_selected_country');
-        const lang = localStorage.getItem('yasmin_lang') || 'en';
+        const selectedRegionJson = localStorage.getItem('yasmeen_selected_country');
+        const lang = localStorage.getItem('yasmeen_lang') || 'en';
         if (!selectedRegionJson) return amount + ' KWD';
 
         const regionData = JSON.parse(selectedRegionJson);
@@ -84,12 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 cart.push(item);
             }
 
-            localStorage.setItem('Yasmin_cart', JSON.stringify(cart));
+            localStorage.setItem('Yasmeen_cart', JSON.stringify(cart));
             updateCartCounter();
 
             // Feedback
             const originalText = btnAddCart.innerText;
-            btnAddCart.innerText = localStorage.getItem('yasmin_lang') === 'ar' ? 'تمت الإضافة!' : 'Added to Cart!';
+            btnAddCart.innerText = localStorage.getItem('yasmeen_lang') === 'ar' ? 'تمت الإضافة!' : 'Added to Cart!';
             btnAddCart.style.backgroundColor = 'var(--secondary)';
             setTimeout(() => {
                 btnAddCart.innerText = originalText;
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     basePrice = parseFloat(priceText.replace(/[^\d.]/g, ''));
                     
                     // If already converted (not KWD), we need a mapping as fallback
-                    const selectedRegion = JSON.parse(localStorage.getItem('yasmin_selected_country'));
+                    const selectedRegion = JSON.parse(localStorage.getItem('yasmeen_selected_country'));
                     if (selectedRegion && selectedRegion.name !== 'Kuwait' && !priceText.includes('KWD')) {
                         const priceMap = {
                             "Midnight Noir Abaya": 45,
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     cart.push(item);
                 }
 
-                localStorage.setItem('Yasmin_cart', JSON.stringify(cart));
+                localStorage.setItem('Yasmeen_cart', JSON.stringify(cart));
                 updateCartCounter();
 
                 const icon = btn.querySelector('i');
@@ -203,8 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let subtotal = 0;
 
             if (cart.length === 0) {
-                const emptyMsg = localStorage.getItem('yasmin_lang') === 'ar' ? 'عربة التسوق فارغة' : 'Your cart is empty.';
-                const shopBtnTxt = localStorage.getItem('yasmin_lang') === 'ar' ? 'مواصلة التسوق' : 'Continue Shopping';
+                const emptyMsg = localStorage.getItem('yasmeen_lang') === 'ar' ? 'عربة التسوق فارغة' : 'Your cart is empty.';
+                const shopBtnTxt = localStorage.getItem('yasmeen_lang') === 'ar' ? 'مواصلة التسوق' : 'Continue Shopping';
                 cartTableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 40px 0;">${emptyMsg} <br><br><a href="shop.html" class="btn btn-primary">${shopBtnTxt}</a></td></tr>`;
                 updateSummary(0);
                 return;
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="item-details">
                                 <h4>${item.title}</h4>
                                 <p>Size: ${item.size} | Color: ${item.color}</p>
-                                <button class="remove-btn" data-index="${index}">${localStorage.getItem('yasmin_lang') === 'ar' ? 'إزالة' : 'Remove'}</button>
+                                <button class="remove-btn" data-index="${index}">${localStorage.getItem('yasmeen_lang') === 'ar' ? 'إزالة' : 'Remove'}</button>
                             </div>
                         </div>
                     </td>
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const updateSummary = (subtotal) => {
-            const selectedRegionJson = localStorage.getItem('yasmin_selected_country');
+            const selectedRegionJson = localStorage.getItem('yasmeen_selected_country');
             const regionData = selectedRegionJson ? JSON.parse(selectedRegionJson) : null;
             const regionName = regionData ? regionData.name : 'Kuwait';
             
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     taxRow.style.display = 'flex';
                     const taxLabel = document.getElementById('tax-label');
                     const taxValue = document.getElementById('tax-value');
-                    if (taxLabel) taxLabel.innerText = localStorage.getItem('yasmin_lang') === 'ar' ? `ضريبة (${taxRate}%)` : `Estimated Tax (${taxRate}%)`;
+                    if (taxLabel) taxLabel.innerText = localStorage.getItem('yasmeen_lang') === 'ar' ? `ضريبة (${taxRate}%)` : `Estimated Tax (${taxRate}%)`;
                     if (taxValue) taxValue.innerText = formatPrice(taxAmount);
                 } else {
                     taxRow.style.display = 'none';
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (subtotalLabel) subtotalLabel.nextElementSibling.innerText = formatPrice(subtotal);
 
                 // Discount Logic
-                const promo = JSON.parse(localStorage.getItem('Yasmin_promo')) || null;
+                const promo = JSON.parse(localStorage.getItem('Yasmeen_promo')) || null;
                 let discountAmount = 0;
                 const discountRow = document.getElementById('discount-row') || createDiscountRow();
                 
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.addEventListener('click', (e) => {
                     const idx = e.target.getAttribute('data-index');
                     cart.splice(idx, 1);
-                    localStorage.setItem('Yasmin_cart', JSON.stringify(cart));
+                    localStorage.setItem('Yasmeen_cart', JSON.stringify(cart));
                     updateCartCounter();
                     renderCart();
                 });
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.addEventListener('click', (e) => {
                     const idx = e.target.getAttribute('data-index');
                     cart[idx].quantity += 1;
-                    localStorage.setItem('Yasmin_cart', JSON.stringify(cart));
+                    localStorage.setItem('Yasmeen_cart', JSON.stringify(cart));
                     updateCartCounter();
                     renderCart();
                 });
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const idx = e.target.getAttribute('data-index');
                     if (cart[idx].quantity > 1) {
                         cart[idx].quantity -= 1;
-                        localStorage.setItem('Yasmin_cart', JSON.stringify(cart));
+                        localStorage.setItem('Yasmeen_cart', JSON.stringify(cart));
                         updateCartCounter();
                         renderCart();
                     }
@@ -354,14 +354,14 @@ document.addEventListener('DOMContentLoaded', () => {
             promoBtn.addEventListener('click', () => {
                 const code = promoInput.value.trim().toUpperCase();
                 const validCodes = {
-                    'YASMIN10': { type: 'percent', value: 10 },
+                    'YASMEEN10': { type: 'percent', value: 10 },
                     'WELCOME20': { type: 'percent', value: 20 },
                     'VIP50': { type: 'percent', value: 50 },
                     'LUXURY5': { type: 'percent', value: 5 }
                 };
 
                 if (validCodes[code]) {
-                    localStorage.setItem('Yasmin_promo', JSON.stringify({
+                    localStorage.setItem('Yasmeen_promo', JSON.stringify({
                         code: code,
                         ...validCodes[code]
                     }));

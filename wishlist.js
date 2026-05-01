@@ -1,6 +1,6 @@
-// Yasmin Abaya - Wishlist Logic
+// AL Yasmeen Abaya - Wishlist Logic
 const Wishlist = {
-    items: JSON.parse(localStorage.getItem('yasmin_wishlist')) || [],
+    items: JSON.parse(localStorage.getItem('yasmeen_wishlist')) || [],
 
     init() {
         this.updateBadge();
@@ -25,7 +25,7 @@ const Wishlist = {
     },
 
     save() {
-        localStorage.setItem('yasmin_wishlist', JSON.stringify(this.items));
+        localStorage.setItem('yasmeen_wishlist', JSON.stringify(this.items));
         this.updateBadge();
     },
 
@@ -145,3 +145,6 @@ document.addEventListener('click', (e) => {
 
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => Wishlist.init());
+
+
+
