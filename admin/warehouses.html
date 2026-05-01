@@ -42,10 +42,14 @@
 </head>
 <body class="font-body bg-soft text-text flex h-screen overflow-hidden">
 
-    <aside class="w-64 bg-primary text-white flex flex-col hidden md:flex flex-shrink-0 transition-all duration-300">
-        <div class="h-20 flex items-center justify-center border-b border-gray-800">
-            <a href="#" class="font-heading text-2xl font-medium tracking-widest uppercase flex items-center gap-2">
-                Yasmin <span class="text-gold italic font-normal">Abaya</span>
+    <aside id="sidebar" class="w-64 bg-primary text-white flex-col hidden md:flex flex-shrink-0 transition-all duration-300 fixed inset-y-0 left-0 z-50 md:relative md:z-auto">
+        <div class="h-20 flex items-center px-6 border-b border-gray-800 gap-4">
+            <button id="close-sidebar" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="../images/logo.png" alt="Yasmin Abaya" class="h-12 w-12 rounded-full border-2 border-gold object-cover bg-white">
+                <span class="font-heading text-lg font-medium tracking-widest uppercase">Yasmin <span class="text-gold italic font-normal lowercase">Abaya</span></span>
             </a>
         </div>
         
@@ -94,9 +98,21 @@
                     <span class="px-4 text-xs font-heading italic text-gray-500">System</span>
                 </li>
                 <li>
+                    <a href="coupons.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
+                        <i class="fa-solid fa-ticket w-5"></i>
+                        <span class="text-sm uppercase tracking-wider">Coupons</span>
+                    </a>
+                </li>
+                <li>
                     <a href="reports.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
                         <i class="fa-solid fa-chart-line w-5"></i>
                         <span class="text-sm uppercase tracking-wider">Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="roles.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
+                        <i class="fa-solid fa-users-gear w-5"></i>
+                        <span class="text-sm uppercase tracking-wider">Roles & Perms</span>
                     </a>
                 </li>
                 <li>
@@ -118,11 +134,12 @@
             </div>
         </div>
     </aside>
+    <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300"></div>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden bg-soft">
         <header class="h-20 bg-white border-b border-border flex items-center justify-between px-8 flex-shrink-0">
             <div class="flex items-center gap-4">
-                <button class="md:hidden text-primary hover:text-gold text-xl">
+                <button id="mobile-menu-button" class="md:hidden text-primary hover:text-gold text-xl focus:outline-none">
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="relative hidden sm:block">
@@ -132,10 +149,36 @@
             </div>
             
             <div class="flex items-center gap-6">
-                <button class="text-gray-400 hover:text-gold relative transition-colors">
-                    <i class="fa-regular fa-bell text-xl"></i>
-                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full">3</span>
-                </button>
+                <div class="relative">
+                    <button onclick="document.getElementById('notif-dropdown').classList.toggle('hidden')" class="text-gray-400 hover:text-gold relative transition-colors focus:outline-none">
+                        <i class="fa-regular fa-bell text-xl"></i>
+                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full">3</span>
+                    </button>
+                    <!-- Notification Dropdown -->
+                    <div id="notif-dropdown" class="hidden absolute right-0 mt-6 w-80 bg-white border border-border shadow-xl z-50">
+                        <div class="px-4 py-3 border-b border-border flex justify-between items-center bg-soft">
+                            <span class="font-heading text-sm text-primary font-medium">Notifications</span>
+                            <span class="text-xs text-gold cursor-pointer hover:underline">Mark all read</span>
+                        </div>
+                        <div class="max-h-64 overflow-y-auto">
+                            <a href="#" class="block px-4 py-3 border-b border-border hover:bg-soft transition-colors">
+                                <p class="text-xs text-primary font-medium mb-1">New VIP Order</p>
+                                <p class="text-xs text-gray-500 mb-1">Sheikha Noura placed order #ORD-0927.</p>
+                                <p class="text-[10px] text-gold">10 minutes ago</p>
+                            </a>
+                            <a href="#" class="block px-4 py-3 border-b border-border hover:bg-soft transition-colors">
+                                <p class="text-xs text-primary font-medium mb-1">Low Stock Alert</p>
+                                <p class="text-xs text-gray-500 mb-1">Italian Silk rolls critically low at Hawalli Main.</p>
+                                <p class="text-[10px] text-gold">2 hours ago</p>
+                            </a>
+                            <a href="#" class="block px-4 py-3 hover:bg-soft transition-colors">
+                                <p class="text-xs text-primary font-medium mb-1">Quality Control</p>
+                                <p class="text-xs text-gray-500 mb-1">Batch #45 passed final tailoring QC.</p>
+                                <p class="text-[10px] text-gold">Yesterday</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <button class="text-gray-400 hover:text-gold transition-colors">
                     <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
                 </button>
@@ -238,5 +281,21 @@
         </div>
     </main>
 
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const closeBtn = document.getElementById('close-sidebar');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('flex');
+            overlay.classList.toggle('hidden');
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
+        if (overlay) overlay.addEventListener('click', toggleMenu);
+    </script>
 </body>
 </html>

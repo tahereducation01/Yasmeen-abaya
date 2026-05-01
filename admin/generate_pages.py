@@ -1,7 +1,7 @@
 import os
 import re
 
-base_dir = r"e:\Projects I have done\sample file\sample file\admin"
+base_dir = r"c:\Users\hussa\Desktop\Yasmin-abaya-main\Yasmin-abaya-main\admin"
 index_file = os.path.join(base_dir, "index.html")
 
 with open(index_file, "r", encoding="utf-8") as f:
@@ -124,6 +124,7 @@ products_content = """
                                 <td class="px-6 py-4">
                                     <span class="inline-block px-2 py-1 bg-primary text-white text-xs mr-2">0.5 Rolls</span>
                                     <span class="font-medium text-red-600 block mt-1">25 Units</span>
+                                    <span class="inline-block mt-1 px-1.5 py-0.5 bg-red-50 text-red-600 text-[10px] border border-red-100 uppercase tracking-tighter font-bold">Low Stock Alert</span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-gold text-xs"></i> Farwaniya Center</span>
@@ -271,6 +272,7 @@ orders_content = """
                                 <th class="px-6 py-4 font-normal">Customer</th>
                                 <th class="px-6 py-4 font-normal">Items</th>
                                 <th class="px-6 py-4 font-normal">Total</th>
+                                <th class="px-6 py-4 font-normal">Notes</th>
                                 <th class="px-6 py-4 font-normal">Status</th>
                                 <th class="px-6 py-4 font-normal text-right">Action</th>
                             </tr>
@@ -283,6 +285,7 @@ orders_content = """
                                 </td>
                                 <td class="px-6 py-4 text-gray-500">2x Royal Velvet, 1x Cashmere</td>
                                 <td class="px-6 py-4 font-medium">450 KWD</td>
+                                <td class="px-6 py-4 text-xs italic text-gray-400">Please deliver after 5 PM.</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2 py-1 bg-yellow-50 text-yellow-600 text-xs border border-yellow-100">Processing</span>
                                 </td>
@@ -297,6 +300,7 @@ orders_content = """
                                 </td>
                                 <td class="px-6 py-4 text-gray-500">1x Gilded Embroidery</td>
                                 <td class="px-6 py-4 font-medium">210 KWD</td>
+                                <td class="px-6 py-4 text-xs italic text-gray-400">-</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Shipped</span>
                                 </td>
@@ -311,6 +315,7 @@ orders_content = """
                                 </td>
                                 <td class="px-6 py-4 text-gray-500">3x Desert Rose Silk</td>
                                 <td class="px-6 py-4 font-medium">360 KWD</td>
+                                <td class="px-6 py-4 text-xs italic text-gray-400">Ring the bell twice please.</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Delivered</span>
                                 </td>
@@ -402,6 +407,72 @@ reports_content = """
             </div>
 """
 generate_page("reports.html", "reports.html", "Performance Reports", "Analyze your boutique's growth and sales trends.", reports_content)
+
+
+# --- COUPONS PAGE ---
+coupons_content = """
+            <div class="bg-white border border-border mb-10">
+                <div class="px-6 py-5 border-b border-border flex justify-between items-center">
+                    <h2 class="font-heading text-xl text-primary">Active Promotions</h2>
+                    <button class="bg-primary text-white hover:bg-gold px-4 py-2 text-xs uppercase tracking-widest transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Create Coupon
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-soft text-gray-500 text-xs uppercase tracking-widest border-b border-border">
+                            <tr>
+                                <th class="px-6 py-4 font-normal">Code</th>
+                                <th class="px-6 py-4 font-normal">Discount</th>
+                                <th class="px-6 py-4 font-normal">Usage</th>
+                                <th class="px-6 py-4 font-normal">Expiry</th>
+                                <th class="px-6 py-4 font-normal">Status</th>
+                                <th class="px-6 py-4 font-normal text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border">
+                            <tr class="hover:bg-soft/50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gold tracking-widest uppercase">YASMIN10</td>
+                                <td class="px-6 py-4">10% Off Sitewide</td>
+                                <td class="px-6 py-4">156 times</td>
+                                <td class="px-6 py-4 text-gray-500">Dec 31, 2026</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Active</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-soft/50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gold tracking-widest uppercase">WELCOME20</td>
+                                <td class="px-6 py-4">20% First Order</td>
+                                <td class="px-6 py-4">842 times</td>
+                                <td class="px-6 py-4 text-gray-500">No Expiry</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Active</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-soft/50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gold tracking-widest uppercase">VIP50</td>
+                                <td class="px-6 py-4">50% Exclusive</td>
+                                <td class="px-6 py-4">12 times</td>
+                                <td class="px-6 py-4 text-gray-500">Jun 30, 2026</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Active</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+"""
+generate_page("coupons.html", "coupons.html", "Promo Codes & Coupons", "Manage your luxury boutique's promotional offers and VIP discounts.", coupons_content)
 
 
 # --- SETTINGS PAGE ---

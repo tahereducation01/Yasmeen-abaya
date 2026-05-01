@@ -89,7 +89,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="categories.html" class="flex items-center gap-3 px-4 py-3 bg-gold/10 text-gold rounded-none border-l-2 border-gold transition-colors">
+                    <a href="categories.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
                         <i class="fa-solid fa-tags w-5"></i>
                         <span class="text-sm uppercase tracking-wider">Brands & Categories</span>
                     </a>
@@ -98,7 +98,7 @@
                     <span class="px-4 text-xs font-heading italic text-gray-500">System</span>
                 </li>
                 <li>
-                    <a href="coupons.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
+                    <a href="coupons.html" class="flex items-center gap-3 px-4 py-3 bg-gold/10 text-gold rounded-none border-l-2 border-gold transition-colors">
                         <i class="fa-solid fa-ticket w-5"></i>
                         <span class="text-sm uppercase tracking-wider">Coupons</span>
                     </a>
@@ -188,35 +188,69 @@
         <div class="flex-1 overflow-y-auto p-8">
             <div class="flex justify-between items-end mb-8">
                 <div>
-                    <h1 class="font-heading text-3xl text-primary mb-1">Brands & Categories</h1>
-                    <p class="text-sm text-gray-500 tracking-wide">Manage your product lines and categories.</p>
+                    <h1 class="font-heading text-3xl text-primary mb-1">Promo Codes & Coupons</h1>
+                    <p class="text-sm text-gray-500 tracking-wide">Manage your luxury boutique's promotional offers and VIP discounts.</p>
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                <div class="bg-white border border-border p-6">
-                    <h3 class="font-heading text-xl text-primary mb-2">Luxury Collection</h3>
-                    <p class="text-sm text-gray-500 mb-4">High-end, handcrafted abayas with premium silk.</p>
-                    <div class="flex justify-between items-center text-xs">
-                        <span class="text-primary font-medium">45 Products</span>
-                        <a href="#" class="text-gold uppercase tracking-widest hover:underline">Edit</a>
-                    </div>
+            <div class="bg-white border border-border mb-10">
+                <div class="px-6 py-5 border-b border-border flex justify-between items-center">
+                    <h2 class="font-heading text-xl text-primary">Active Promotions</h2>
+                    <button class="bg-primary text-white hover:bg-gold px-4 py-2 text-xs uppercase tracking-widest transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Create Coupon
+                    </button>
                 </div>
-                <div class="bg-white border border-border p-6">
-                    <h3 class="font-heading text-xl text-primary mb-2">Everyday Essentials</h3>
-                    <p class="text-sm text-gray-500 mb-4">Comfortable, minimal designs for daily wear.</p>
-                    <div class="flex justify-between items-center text-xs">
-                        <span class="text-primary font-medium">120 Products</span>
-                        <a href="#" class="text-gold uppercase tracking-widest hover:underline">Edit</a>
-                    </div>
-                </div>
-                <div class="bg-white border border-border p-6">
-                    <h3 class="font-heading text-xl text-primary mb-2">Bridal & Evening</h3>
-                    <p class="text-sm text-gray-500 mb-4">Intricate embroidery and rare fabrics for special occasions.</p>
-                    <div class="flex justify-between items-center text-xs">
-                        <span class="text-primary font-medium">25 Products</span>
-                        <a href="#" class="text-gold uppercase tracking-widest hover:underline">Edit</a>
-                    </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-soft text-gray-500 text-xs uppercase tracking-widest border-b border-border">
+                            <tr>
+                                <th class="px-6 py-4 font-normal">Code</th>
+                                <th class="px-6 py-4 font-normal">Discount</th>
+                                <th class="px-6 py-4 font-normal">Usage</th>
+                                <th class="px-6 py-4 font-normal">Expiry</th>
+                                <th class="px-6 py-4 font-normal">Status</th>
+                                <th class="px-6 py-4 font-normal text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border">
+                            <tr class="hover:bg-soft/50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gold tracking-widest uppercase">YASMIN10</td>
+                                <td class="px-6 py-4">10% Off Sitewide</td>
+                                <td class="px-6 py-4">156 times</td>
+                                <td class="px-6 py-4 text-gray-500">Dec 31, 2026</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Active</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-soft/50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gold tracking-widest uppercase">WELCOME20</td>
+                                <td class="px-6 py-4">20% First Order</td>
+                                <td class="px-6 py-4">842 times</td>
+                                <td class="px-6 py-4 text-gray-500">No Expiry</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Active</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-soft/50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gold tracking-widest uppercase">VIP50</td>
+                                <td class="px-6 py-4">50% Exclusive</td>
+                                <td class="px-6 py-4">12 times</td>
+                                <td class="px-6 py-4 text-gray-500">Jun 30, 2026</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Active</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

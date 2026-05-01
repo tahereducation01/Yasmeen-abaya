@@ -42,10 +42,14 @@
 </head>
 <body class="font-body bg-soft text-text flex h-screen overflow-hidden">
 
-    <aside class="w-64 bg-primary text-white flex flex-col hidden md:flex flex-shrink-0 transition-all duration-300">
-        <div class="h-20 flex items-center justify-center border-b border-gray-800">
-            <a href="#" class="font-heading text-2xl font-medium tracking-widest uppercase flex items-center gap-2">
-                Yasmin <span class="text-gold italic font-normal">Abaya</span>
+    <aside id="sidebar" class="w-64 bg-primary text-white flex-col hidden md:flex flex-shrink-0 transition-all duration-300 fixed inset-y-0 left-0 z-50 md:relative md:z-auto">
+        <div class="h-20 flex items-center px-6 border-b border-gray-800 gap-4">
+            <button id="close-sidebar" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="../images/logo.png" alt="Yasmin Abaya" class="h-12 w-12 rounded-full border-2 border-gold object-cover bg-white">
+                <span class="font-heading text-lg font-medium tracking-widest uppercase">Yasmin <span class="text-gold italic font-normal lowercase">Abaya</span></span>
             </a>
         </div>
         
@@ -94,9 +98,21 @@
                     <span class="px-4 text-xs font-heading italic text-gray-500">System</span>
                 </li>
                 <li>
+                    <a href="coupons.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
+                        <i class="fa-solid fa-ticket w-5"></i>
+                        <span class="text-sm uppercase tracking-wider">Coupons</span>
+                    </a>
+                </li>
+                <li>
                     <a href="reports.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
                         <i class="fa-solid fa-chart-line w-5"></i>
                         <span class="text-sm uppercase tracking-wider">Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="roles.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
+                        <i class="fa-solid fa-users-gear w-5"></i>
+                        <span class="text-sm uppercase tracking-wider">Roles & Perms</span>
                     </a>
                 </li>
                 <li>
@@ -118,11 +134,12 @@
             </div>
         </div>
     </aside>
+    <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300"></div>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden bg-soft">
         <header class="h-20 bg-white border-b border-border flex items-center justify-between px-8 flex-shrink-0">
             <div class="flex items-center gap-4">
-                <button class="md:hidden text-primary hover:text-gold text-xl">
+                <button id="mobile-menu-button" class="md:hidden text-primary hover:text-gold text-xl focus:outline-none">
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="relative hidden sm:block">
@@ -132,10 +149,36 @@
             </div>
             
             <div class="flex items-center gap-6">
-                <button class="text-gray-400 hover:text-gold relative transition-colors">
-                    <i class="fa-regular fa-bell text-xl"></i>
-                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full">3</span>
-                </button>
+                <div class="relative">
+                    <button onclick="document.getElementById('notif-dropdown').classList.toggle('hidden')" class="text-gray-400 hover:text-gold relative transition-colors focus:outline-none">
+                        <i class="fa-regular fa-bell text-xl"></i>
+                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full">3</span>
+                    </button>
+                    <!-- Notification Dropdown -->
+                    <div id="notif-dropdown" class="hidden absolute right-0 mt-6 w-80 bg-white border border-border shadow-xl z-50">
+                        <div class="px-4 py-3 border-b border-border flex justify-between items-center bg-soft">
+                            <span class="font-heading text-sm text-primary font-medium">Notifications</span>
+                            <span class="text-xs text-gold cursor-pointer hover:underline">Mark all read</span>
+                        </div>
+                        <div class="max-h-64 overflow-y-auto">
+                            <a href="#" class="block px-4 py-3 border-b border-border hover:bg-soft transition-colors">
+                                <p class="text-xs text-primary font-medium mb-1">New VIP Order</p>
+                                <p class="text-xs text-gray-500 mb-1">Sheikha Noura placed order #ORD-0927.</p>
+                                <p class="text-[10px] text-gold">10 minutes ago</p>
+                            </a>
+                            <a href="#" class="block px-4 py-3 border-b border-border hover:bg-soft transition-colors">
+                                <p class="text-xs text-primary font-medium mb-1">Low Stock Alert</p>
+                                <p class="text-xs text-gray-500 mb-1">Italian Silk rolls critically low at Hawalli Main.</p>
+                                <p class="text-[10px] text-gold">2 hours ago</p>
+                            </a>
+                            <a href="#" class="block px-4 py-3 hover:bg-soft transition-colors">
+                                <p class="text-xs text-primary font-medium mb-1">Quality Control</p>
+                                <p class="text-xs text-gray-500 mb-1">Batch #45 passed final tailoring QC.</p>
+                                <p class="text-[10px] text-gold">Yesterday</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <button class="text-gray-400 hover:text-gold transition-colors">
                     <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
                 </button>
@@ -159,6 +202,7 @@
                                 <th class="px-6 py-4 font-normal">Customer</th>
                                 <th class="px-6 py-4 font-normal">Items</th>
                                 <th class="px-6 py-4 font-normal">Total</th>
+                                <th class="px-6 py-4 font-normal">Notes</th>
                                 <th class="px-6 py-4 font-normal">Status</th>
                                 <th class="px-6 py-4 font-normal text-right">Action</th>
                             </tr>
@@ -171,11 +215,13 @@
                                 </td>
                                 <td class="px-6 py-4 text-gray-500">2x Royal Velvet, 1x Cashmere</td>
                                 <td class="px-6 py-4 font-medium">450 KWD</td>
+                                <td class="px-6 py-4 text-xs italic text-gray-400">Please deliver after 5 PM.</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2 py-1 bg-yellow-50 text-yellow-600 text-xs border border-yellow-100">Processing</span>
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-eye"></i></button>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button class="text-gray-400 hover:text-gold" title="View Order"><i class="fa-solid fa-eye"></i></button>
+                                    <button onclick="printThermal('#ORD-0928', 'Fatima Al-Sabah', '2x Royal Velvet, 1x Cashmere', '450 KWD')" class="text-gray-400 hover:text-gold" title="Zebra / Thermal Print"><i class="fa-solid fa-print"></i></button>
                                 </td>
                             </tr>
                             <tr class="hover:bg-soft/50 transition-colors">
@@ -185,11 +231,13 @@
                                 </td>
                                 <td class="px-6 py-4 text-gray-500">1x Gilded Embroidery</td>
                                 <td class="px-6 py-4 font-medium">210 KWD</td>
+                                <td class="px-6 py-4 text-xs italic text-gray-400">-</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Shipped</span>
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-eye"></i></button>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button class="text-gray-400 hover:text-gold" title="View Order"><i class="fa-solid fa-eye"></i></button>
+                                    <button onclick="printThermal('#ORD-0927', 'Sheikha Noura', '1x Gilded Embroidery', '210 KWD')" class="text-gray-400 hover:text-gold" title="Zebra / Thermal Print"><i class="fa-solid fa-print"></i></button>
                                 </td>
                             </tr>
                             <tr class="hover:bg-soft/50 transition-colors">
@@ -199,11 +247,13 @@
                                 </td>
                                 <td class="px-6 py-4 text-gray-500">3x Desert Rose Silk</td>
                                 <td class="px-6 py-4 font-medium">360 KWD</td>
+                                <td class="px-6 py-4 text-xs italic text-gray-400">Ring the bell twice please.</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2 py-1 bg-green-50 text-green-600 text-xs border border-green-100">Delivered</span>
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button class="text-gray-400 hover:text-gold"><i class="fa-solid fa-eye"></i></button>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button class="text-gray-400 hover:text-gold" title="View Order"><i class="fa-solid fa-eye"></i></button>
+                                    <button onclick="printThermal('#ORD-0926', 'Mariam Abdullah', '3x Desert Rose Silk', '360 KWD')" class="text-gray-400 hover:text-gold" title="Zebra / Thermal Print"><i class="fa-solid fa-print"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -217,5 +267,94 @@
         </div>
     </main>
 
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const closeBtn = document.getElementById('close-sidebar');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('flex');
+            overlay.classList.toggle('hidden');
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
+        if (overlay) overlay.addEventListener('click', toggleMenu);
+
+        // Thermal Printing Logic
+        function printThermal(orderId, customer, items, total) {
+            const printWindow = window.open('', '_blank', 'width=400,height=600');
+            const date = new Date().toLocaleString();
+            
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Thermal Receipt - ${orderId}</title>
+                    <style>
+                        @page { size: 80mm 200mm; margin: 0; }
+                        body { 
+                            width: 72mm; 
+                            margin: 0 auto; 
+                            padding: 5mm; 
+                            font-family: 'Courier New', Courier, monospace; 
+                            font-size: 12px; 
+                            color: #000;
+                            line-height: 1.2;
+                        }
+                        .text-center { text-align: center; }
+                        .text-right { text-align: right; }
+                        .bold { font-weight: bold; }
+                        .divider { border-top: 1px dashed #000; margin: 5px 0; }
+                        .header { font-size: 16px; margin-bottom: 5px; text-transform: uppercase; }
+                        .footer { font-size: 10px; margin-top: 10px; }
+                        .item-row { display: flex; justify-content: space-between; margin: 2px 0; }
+                        .barcode { font-family: 'IDAutomationHC39M', 'Courier New', monospace; font-size: 20px; margin: 10px 0; }
+                        @media print {
+                            body { width: 72mm; }
+                        }
+                    </style>
+                </head>
+                <body onload="window.print(); window.close();">
+                    <div class="text-center">
+                        <div class="header bold">Yasmin Abaya</div>
+                        <div>Luxury Modest Fashion</div>
+                        <div>Salhiya Complex, Kuwait</div>
+                        <div class="divider"></div>
+                        <div class="bold">INVOICE</div>
+                        <div class="divider"></div>
+                    </div>
+                    
+                    <div>
+                        <div class="item-row"><span>Order:</span> <span class="bold">${orderId}</span></div>
+                        <div class="item-row"><span>Date:</span> <span>${date}</span></div>
+                        <div class="item-row"><span>Client:</span> <span class="bold">${customer}</span></div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    <div class="bold">ITEMS</div>
+                    <div>${items.split(',').map(item => `<div class="item-row"><span>${item.trim()}</span></div>`).join('')}</div>
+                    
+                    <div class="divider"></div>
+                    <div class="item-row bold" style="font-size: 14px;">
+                        <span>TOTAL:</span>
+                        <span>${total}</span>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="text-center">
+                        <div class="barcode">*${orderId.replace('#', '')}*</div>
+                        <div class="footer">
+                            Thank you for choosing Yasmin Abaya.<br>
+                            Follow us @yasminabaya
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+    </script>
 </body>
 </html>

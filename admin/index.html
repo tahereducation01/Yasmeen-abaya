@@ -42,10 +42,14 @@
 </head>
 <body class="font-body bg-soft text-text flex h-screen overflow-hidden">
 
-    <aside class="w-64 bg-primary text-white flex flex-col hidden md:flex flex-shrink-0 transition-all duration-300">
-        <div class="h-20 flex items-center justify-center border-b border-gray-800">
-            <a href="#" class="font-heading text-2xl font-medium tracking-widest uppercase flex items-center gap-2">
-                Yasmin <span class="text-gold italic font-normal">Abaya</span>
+    <aside id="sidebar" class="w-64 bg-primary text-white flex-col hidden md:flex flex-shrink-0 transition-all duration-300 fixed inset-y-0 left-0 z-50 md:relative md:z-auto">
+        <div class="h-20 flex items-center px-6 border-b border-gray-800 gap-4">
+            <button id="close-sidebar" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="../images/logo.png" alt="Yasmin Abaya" class="h-12 w-12 rounded-full border-2 border-gold object-cover bg-white">
+                <span class="font-heading text-lg font-medium tracking-widest uppercase">Yasmin <span class="text-gold italic font-normal lowercase">Abaya</span></span>
             </a>
         </div>
         
@@ -94,6 +98,12 @@
                     <span class="px-4 text-xs font-heading italic text-gray-500">System</span>
                 </li>
                 <li>
+                    <a href="coupons.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
+                        <i class="fa-solid fa-ticket w-5"></i>
+                        <span class="text-sm uppercase tracking-wider">Coupons</span>
+                    </a>
+                </li>
+                <li>
                     <a href="reports.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gold hover:bg-white/5 transition-colors">
                         <i class="fa-solid fa-chart-line w-5"></i>
                         <span class="text-sm uppercase tracking-wider">Reports</span>
@@ -124,11 +134,12 @@
             </div>
         </div>
     </aside>
+    <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300"></div>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden bg-soft">
         <header class="h-20 bg-white border-b border-border flex items-center justify-between px-8 flex-shrink-0">
             <div class="flex items-center gap-4">
-                <button class="md:hidden text-primary hover:text-gold text-xl">
+                <button id="mobile-menu-button" class="md:hidden text-primary hover:text-gold text-xl focus:outline-none">
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="relative hidden sm:block">
@@ -181,6 +192,41 @@
                     <p class="text-sm text-gray-500 tracking-wide">Welcome back. Here is your boutique's performance.</p>
                 </div>
 
+            </div>
+
+            <!-- Critical Inventory Alerts -->
+            <div class="mb-10">
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-triangle-exclamation text-red-600"></i>
+                    <h2 class="font-heading text-lg text-primary">Critical Inventory Alerts</h2>
+                    <span class="ml-2 px-2 py-0.5 bg-red-600 text-white text-[10px] rounded-full">2</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-red-50 border border-red-100 p-4 flex items-center justify-between transition-transform hover:scale-[1.01]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white border border-red-200 flex items-center justify-center text-red-600">
+                                <i class="fa-solid fa-scroll text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-primary">Italian Silk (Midnight Noir)</p>
+                                <p class="text-xs text-red-600">0.2 Rolls Remaining - Estimated 10 Abayas</p>
+                            </div>
+                        </div>
+                        <button class="text-xs text-primary font-medium uppercase tracking-widest hover:text-gold transition-colors">Order Now</button>
+                    </div>
+                    <div class="bg-red-50 border border-red-100 p-4 flex items-center justify-between transition-transform hover:scale-[1.01]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white border border-red-200 flex items-center justify-center text-red-600">
+                                <i class="fa-solid fa-vest text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-primary">Cashmere Blend Hijab</p>
+                                <p class="text-xs text-red-600">Only 8 Units Left - Out of stock in 2 days</p>
+                            </div>
+                        </div>
+                        <button class="text-xs text-primary font-medium uppercase tracking-widest hover:text-gold transition-colors">Restock</button>
+                    </div>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
@@ -349,5 +395,21 @@
         </div>
     </main>
 
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const closeBtn = document.getElementById('close-sidebar');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('flex');
+            overlay.classList.toggle('hidden');
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
+        if (overlay) overlay.addEventListener('click', toggleMenu);
+    </script>
 </body>
 </html>
