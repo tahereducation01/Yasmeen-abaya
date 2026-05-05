@@ -26,18 +26,21 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--primary);
             color: var(--text-light);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+            padding: 20px 0;
         }
 
         .landing-container {
-            width: 100%;
-            max-width: 500px;
-            padding: 40px 20px;
+            width: min(100%, 520px);
+            max-width: 520px;
+            padding: 34px 18px;
+            margin: 0 auto;
             text-align: center;
             animation: fadeIn 1.2s ease-out;
         }
@@ -81,9 +84,9 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 60vh;
+            max-height: min(60vh, calc(100vh - 300px));
             overflow-y: auto;
-            padding-right: 10px;
+            padding-right: 8px;
         }
 
         /* Custom Scrollbar */
@@ -243,26 +246,79 @@
                 letter-spacing: 6px;
             }
         }
+
         .logo {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            font-family: var(--font-heading);
-            font-size: 2.8rem;
-            color: #FFF;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 3px;
         }
-        .logo span { color: var(--secondary); font-style: italic; text-transform: none; }
-        .logo img { 
-            height: 90px; 
-            width: 90px; 
-            object-fit: cover; 
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            color: #FFF;
+            letter-spacing: 3px;
+            line-height: 1.05;
+        }
+        .logo span {
+            color: var(--secondary);
+            font-style: italic;
+            text-transform: none;
+        }
+        .logo img {
+            height: 80px;
+            width: 80px;
+            object-fit: cover;
             border-radius: 50%;
             border: 2px solid var(--secondary);
-            background-color: #FFF; /* Keeps the logo clear but circular */
+            background-color: #FFF;
+        }
+
+        @media (max-width: 480px) {
+            .landing-container {
+                padding: 24px 16px;
+            }
+            .logo {
+                gap: 10px;
+                font-size: 2.2rem;
+            }
+            .logo img {
+                height: 50px;
+                width: 50px;
+            }
+            .tagline {
+                font-size: 0.84rem;
+                letter-spacing: 2px;
+                margin-bottom: 30px;
+            }
+            .instruction {
+                font-size: 1.15rem;
+                margin-bottom: 22px;
+            }
+            .lang-selector {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 24px;
+            }
+            .lang-btn {
+                padding: 8px 14px;
+                min-width: 110px;
+            }
+            .country-btn {
+                padding: 14px 16px;
+            }
+            .country-name {
+                font-size: 0.96rem;
+            }
+            .footer-note {
+                font-size: 0.72rem;
+                margin-top: 28px;
+            }
         }
     </style>
 </head>
@@ -282,7 +338,7 @@
     <div class="landing-container">
         <div class="logo">
             <img src="images/logo.png" alt="AL Yasmeen Abaya">
-            Yasmeen <span>Abaya</span>
+            <div class="brand-name">Yasmeen <span>Abaya</span></div>
         </div>
         <div class="tagline">The Epitome of Modest Luxury</div>
         
